@@ -43,8 +43,8 @@ sdk env
 ## Frontend
 
 Using:
-- Angular (v?)
-- TypeScript (v?)
+- Angular v13
+- TypeScript v4.5
 
 Open up another terminal, and start up the frontend application using:
 ```sh
