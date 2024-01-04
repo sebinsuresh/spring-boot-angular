@@ -50,14 +50,12 @@ public class EmployeeResource {
 
     @PutMapping("/update")
     public ResponseEntity<Employee> updateEmployee(@RequestBody Employee employee) {
-        // TODO: Not found
         Employee updatedEmployee = employeeService.updateEmployee(employee);
         return new ResponseEntity<>(updatedEmployee, HttpStatus.OK);
     }
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteEmployee(@PathVariable("id") Long id) {
-        // TODO: Not found
         employeeService.deleteEmployee(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
