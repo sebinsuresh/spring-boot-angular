@@ -13,3 +13,15 @@ Using:
   - Spring Data JPA
   - PostgreSQL Driver
 
+Bring up Postgres:
+```sh
+docker compose up -d db
+```
+
+Enter Postgres CLI & Create DB:
+```sh
+docker exec -it angular-spring-boot-tut-db-1 psql -U postgres
+
+# once you're in:
+CREATE DATABASE employeemanager;
+```
