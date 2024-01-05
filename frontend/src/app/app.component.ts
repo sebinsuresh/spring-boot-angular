@@ -11,7 +11,8 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
-  public employees: Employee[] = [];
+  public displayedEmployees: Employee[] = [];
+  private employees: Employee[] = [];
   public currentEmployee: Employee | null = null;
 
   constructor(private employeeService: EmployeeService) {}
@@ -25,6 +26,7 @@ export class AppComponent implements OnInit {
       next: (response) => {
         this.employees = response;
         this.employees.sort((employee1, employee2) => employee1.id - employee2.id);
+        this.displayedEmployees = this.employees;
       },
       error: (error: HttpErrorResponse) => {
         console.error(error.message);
@@ -119,5 +121,17 @@ export class AppComponent implements OnInit {
         console.error(error);
       },
     });
+  }
+
+  public onSearchEmployee(event: Event) {
+    const key = (event.target as HTMLInputElement)?.value?.trim().toLowerCase();
+    if (!key) this.displayedEmployees = this.employees;
+
+    this.displayedEmployees = this.employees.filter(
+      (e) =>
+        e.email.toLowerCase().indexOf(key) !== -1 ||
+        e.name.toLowerCase().indexOf(key) !== -1 ||
+        e.jobTitle.toLowerCase().indexOf(key) !== -1,
+    );
   }
 }

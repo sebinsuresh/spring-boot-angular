@@ -1,9 +1,10 @@
 <nav>
   <span class="logo">Employee Manager</span>
   <a href="#" (click)="onOpenModal(null, 'add')">Add Employee</a>
+  <input type="text" class="search" placeholder="search for employees" (input)="onSearchEmployee($event)" />
 </nav>
 <div class="employee-container">
-  <div *ngFor="let employee of employees" class="employee-card">
+  <div *ngFor="let employee of displayedEmployees" class="employee-card">
     <img src={{employee?.imageUrl}} alt="Image of Employee" />
 
     <div>{{employee?.name}}</div>
@@ -16,7 +17,7 @@
       <input type="button" value="❌" (click)="onOpenModal(employee, 'delete')" />
     </div>
   </div>
-  <div *ngIf="!(employees?.length)" class="message">
+  <div *ngIf="!(displayedEmployees?.length)" class="message">
     <p>No employees found!</p>
   </div>
 </div>
