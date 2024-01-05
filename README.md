@@ -1,6 +1,6 @@
 ## About
 
-Employee manager project made using Angular + Spring Boot + PostgeSQL.
+Employee manager project made using Angular + Spring Boot + PostgreSQL.
 Following this tutorial: https://www.youtube.com/watch?v=Gx4iBLKLVHk
 
 ## Backend
@@ -47,3 +47,28 @@ Open up another terminal, and start up the frontend application using:
 cd frontend
 ng serve
 ```
+
+## Running in Docker
+
+From the root of the project, run:
+```sh
+docker compose up -d
+```
+
+Visit http://localhost:4200 in browser
+
+You should be able to access:
+- DB: `localhost:5432`
+- Backend API: `localhost:8080`
+- Frontend: `localhost:4200`
+
+To bring everything down:
+```sh
+docker compose down
+# Or to remove DB data as well:
+docker compose down --volumes
+```
+
+### Adding data
+
+Use the postman collection to create data

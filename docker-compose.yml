@@ -1,8 +1,38 @@
 version: "3.9"
 
 services:
+  frontend:
+    build:
+      context: frontend
+      dockerfile: Dockerfile
+    container_name: angular-spring-frontend
+    ports:
+      - "4200:80"
+    networks:
+      - angular-spring-network
+    healthcheck:
+      # TODO: Something better
+      test: curl -Is localhost:80 | head -n 1 | grep 200 || exit 1
+  backend:
+    build:
+      context: backend
+      dockerfile: Dockerfile
+    depends_on:
+      - db
+    container_name: angular-spring-backend
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://host.docker.internal:5432/employeemanager
+    networks:
+      - angular-spring-network
+    healthcheck:
+      # TODO: Something better
+      test: curl -Is localhost:8080/employees/find/0 | head -n 1 | grep 404 || exit 1
   db:
-    image: postgres:13.9
+    build:
+      context: postgres
+      dockerfile: Dockerfile
     container_name: angular-spring-backend-db
     restart: always
     ports:
@@ -13,7 +43,7 @@ services:
     volumes:
       - postgres-data:/var/lib/postgresql/data
     networks:
-      - employee-mgr-network
+      - angular-spring-network
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 15s
@@ -22,7 +52,7 @@ services:
       start_period: 10s
 
 networks:
-  employee-mgr-network:
-    name: employee-mgr-network
+  angular-spring-network:
+    name: angular-spring-network
 volumes:
   postgres-data:
