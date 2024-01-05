@@ -21,7 +21,8 @@ public class EmployeemanagerApplication {
 				registry
 						.addMapping("/employee/**")
 						// TODO: make this configurable:
-						.allowedOrigins("http://localhost:4200");
+						.allowedOrigins("http://localhost:4200")
+						.allowedMethods("GET", "POST", "PUT", "DELETE");
 			}
 		};
 	}
