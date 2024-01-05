@@ -23,6 +23,10 @@ nav a:hover {
   text-decoration: underline;
 }
 
+.employee-container .message {
+  margin-left: 20px;
+}
+
 .employee-card {
   display: inline-block;
   border: 1px solid #c5c5c5;

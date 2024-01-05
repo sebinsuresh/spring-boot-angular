@@ -15,6 +15,9 @@
       <input type="button" value="❌" (click)="onOpenModal(employee, 'delete')" />
     </div>
   </div>
+  <div *ngIf="!(employees?.length)" class="message">
+    <p>No employees found!</p>
+  </div>
 </div>
 <div id="modals-container" (click)="closeAllModals()">
   <!-- Add Employee Modal -->
