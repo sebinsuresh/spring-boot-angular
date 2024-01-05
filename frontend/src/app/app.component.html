@@ -1,3 +1,18 @@
-<div *ngFor="let employee of employees">
-  <div>{{employee.name}}</div>
+<nav>
+  <span class="logo">Employee Manager</span>
+  <a href="#">Add Employee</a>
+</nav>
+<div class="employee-container">
+  <div *ngFor="let employee of employees" class="employee-card">
+    <img src={{employee?.imageUrl}} alt="Image of Employee" />
+
+    <div>{{employee?.name}}</div>
+    <div>{{employee?.jobTitle}}</div>
+    <div>{{employee?.phone}}</div>
+
+    <div class="employee-button-container">
+      <input type="button" value="✏️" />
+      <input type="button" value="❌" />
+    </div>
+  </div>
 </div>

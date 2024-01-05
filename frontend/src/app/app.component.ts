@@ -20,10 +20,12 @@ export class AppComponent implements OnInit {
   public getEmployees(): void {
     this.employeeService.getEmployees().subscribe({
       next: (response) => {
+        console.log(response);
         this.employees = response;
       },
       error: (error: HttpErrorResponse) => {
         console.error(error.message);
+        this.employees = [];
       },
     });
   }

@@ -1,0 +1,50 @@
+nav {
+  display: block;
+  height: 30px;
+  width: 100vw;
+  background-color: gray;
+  padding: 10px;
+}
+
+nav .logo {
+  margin-right: 20px;
+  color: #fafafa;
+  font-size: larger;
+  font-weight: bold;
+}
+
+nav a {
+  color: #fafafa;
+  text-decoration: none;
+}
+
+nav a:hover {
+  color: #fff;
+  text-decoration: underline;
+}
+
+.employee-card {
+  display: inline-block;
+  border: 1px solid #c5c5c5;
+  box-sizing: border-box;
+  border-radius: 10px;
+  padding: 10px;
+  margin: 10px;
+  text-align: center;
+  background-color: white;
+
+  width: 220px;
+  height: 320px;
+
+  overflow: scroll; /* Cards have different top value without this */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none;
+}
+
+.employee-card::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
+}
+
+.employee-card img {
+  width: 150px;
+}
