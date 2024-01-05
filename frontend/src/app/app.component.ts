@@ -20,8 +20,8 @@ export class AppComponent implements OnInit {
   public getEmployees(): void {
     this.employeeService.getEmployees().subscribe({
       next: (response) => {
-        console.log(response);
         this.employees = response;
+        this.employees.sort((employee1, employee2) => employee1.id - employee2.id);
       },
       error: (error: HttpErrorResponse) => {
         console.error(error.message);
