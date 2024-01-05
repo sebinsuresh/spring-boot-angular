@@ -7,10 +7,13 @@ nav {
 }
 
 nav .logo {
-  margin-right: 20px;
   color: #fafafa;
   font-size: larger;
   font-weight: bold;
+}
+
+nav * {
+  margin-right: 20px;
 }
 
 nav a {
