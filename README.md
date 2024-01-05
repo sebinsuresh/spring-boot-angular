@@ -18,8 +18,6 @@ Using:
 To run the backend services:
 
 ```sh
-cd backend
-
 # Bring up Postgres:
 docker compose up -d db
 
@@ -33,6 +31,8 @@ CREATE DATABASE employeemanager;
 
 After this you can start up the backend API:
 ```sh
+cd backend
+
 # Use SDKMan and set the java version
 sdk env
 
