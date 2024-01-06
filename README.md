@@ -45,7 +45,8 @@ Using:
 Open up another terminal, and start up the frontend application using:
 ```sh
 cd frontend
-ng serve
+# Run `npm install` if not already
+npm start
 ```
 
 ## Running in Docker
