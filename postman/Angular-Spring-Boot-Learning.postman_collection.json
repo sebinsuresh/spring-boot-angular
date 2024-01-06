@@ -214,7 +214,7 @@
 					"script": {
 						"type": "text/javascript",
 						"exec": [
-							"pm.collectionVariables.set(\"baseUrl\", \"http://localhost:8080\");",
+							"pm.collectionVariables.set(\"1_baseUrl\", \"http://localhost:8080\");",
 							""
 						]
 					}
