@@ -1,15 +1,15 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Employee } from './employee';
 import { environment } from 'src/environments/environment';
+import { Employee } from '../../../types/employee';
 
 @Injectable({
   // If this was not specified here, need to add
   // `EmployeeService` to app.module.ts's `providers` array
   providedIn: 'root',
 })
-export class EmployeeService {
+export class EmployeeCrudService {
   private apiServerUrl = environment.apiBaseUrl;
 
   constructor(private http: HttpClient) {}

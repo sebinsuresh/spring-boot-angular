@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { Employee } from './employee';
-import { EmployeeService } from './employee.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ModalModes } from 'src/types/modalModes';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { EmployeeModalEvent } from 'src/types/modalTypes';
+import { Employee } from '../types/employee';
+import { ModalsContainerComponent } from './components/modals/modals-container/modals-container.component';
+import { EmployeeCrudService } from './services/employee-crud/employee-crud.service';
+import { EmployeeSearchService } from './services/employee-search/employee-search.service';
 
 @Component({
   selector: 'app-root',
@@ -11,11 +13,15 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
-  public displayedEmployees: Employee[] = [];
-  private employees: Employee[] = [];
-  public currentEmployee: Employee | null = null;
+  @ViewChild(ModalsContainerComponent) private modalsContainerRef!: ModalsContainerComponent;
 
-  constructor(private employeeService: EmployeeService) {}
+  public displayedEmployees: Employee[] = [];
+  public allEmployees: Employee[] = [];
+
+  constructor(
+    private employeeService: EmployeeCrudService,
+    private employeeSearchService: EmployeeSearchService,
+  ) {}
 
   ngOnInit(): void {
     this.getEmployees();
@@ -24,56 +30,19 @@ export class AppComponent implements OnInit {
   public getEmployees(): void {
     this.employeeService.getEmployees().subscribe({
       next: (response) => {
-        this.employees = response;
-        this.employees.sort((employee1, employee2) => employee1.id - employee2.id);
-        this.displayedEmployees = this.employees;
+        this.allEmployees = response;
+        this.allEmployees.sort((employee1, employee2) => employee1.id - employee2.id);
+        this.displayedEmployees = this.allEmployees;
       },
       error: (error: HttpErrorResponse) => {
         console.error(error.message);
-        this.employees = [];
+        this.allEmployees = [];
       },
     });
   }
 
-  public logMessage(...args: any[]) {
-    console.log(...args);
-  }
-
-  public onOpenModal(employee: Employee | null, mode: ModalModes) {
-    this.currentEmployee = employee;
-
-    const modalContainer = document.getElementById('modals-container');
-    if (!modalContainer) {
-      console.error('modal container not found');
-      return;
-    }
-    modalContainer.style.display = 'block';
-
-    const modal = document.getElementById(`${mode}Employee`);
-    if (!modal) {
-      console.error(`modal for ${mode} not found`);
-      return;
-    }
-    modal.style.display = 'block';
-  }
-
-  public closeAllModals() {
-    const modals = document.querySelectorAll(`#modals-container .modal`);
-    modals.forEach((modal) => {
-      if (!modal || !(modal instanceof HTMLElement)) return;
-      modal.style.display = 'none';
-    });
-
-    const modalContainer = document.getElementById('modals-container');
-    if (!modalContainer) {
-      console.error('modal container not found');
-      return;
-    }
-    modalContainer.style.display = 'none';
-  }
-
   public onAddEmployee(form: NgForm) {
-    this.closeAllModals();
+    this.closeModals();
     this.employeeService
       .addEmployee(form.value)
       .subscribe({
@@ -89,14 +58,9 @@ export class AppComponent implements OnInit {
       });
   }
 
-  public onEditEmployee(employee: Employee | null) {
-    if (!employee) {
-      console.error('No employee selected for edit');
-      return;
-    }
-
-    this.closeAllModals();
-    this.employeeService.updateEmployee(employee).subscribe({
+  public onEditEmployee(form: NgForm) {
+    this.closeModals();
+    this.employeeService.updateEmployee(form.value).subscribe({
       next: () => {
         this.getEmployees();
       },
@@ -106,13 +70,13 @@ export class AppComponent implements OnInit {
     });
   }
 
-  public onDeleteEmployee(employee: Employee | null) {
+  public onDeleteEmployee(employee: Employee | undefined) {
     if (!employee) {
-      console.error('No employee selected for edit');
+      console.error('No employee selected for delete');
       return;
     }
 
-    this.closeAllModals();
+    this.closeModals();
     this.employeeService.deleteEmployee(employee.id).subscribe({
       next: () => {
         this.getEmployees();
@@ -123,15 +87,16 @@ export class AppComponent implements OnInit {
     });
   }
 
-  public onSearchEmployee(event: Event) {
-    const key = (event.target as HTMLInputElement)?.value?.trim().toLowerCase();
-    if (!key) this.displayedEmployees = this.employees;
+  public onOpenModal(event: EmployeeModalEvent) {
+    this.modalsContainerRef.onOpenModal(event);
+  }
 
-    this.displayedEmployees = this.employees.filter(
-      (e) =>
-        e.email.toLowerCase().indexOf(key) !== -1 ||
-        e.name.toLowerCase().indexOf(key) !== -1 ||
-        e.jobTitle.toLowerCase().indexOf(key) !== -1,
-    );
+  public onSearchEmployee(event: Event) {
+    const key = (event.target as HTMLInputElement)?.value;
+    this.displayedEmployees = this.employeeSearchService.findEmployees(this.allEmployees, key);
+  }
+
+  private closeModals() {
+    this.modalsContainerRef.closeAllModals();
   }
 }

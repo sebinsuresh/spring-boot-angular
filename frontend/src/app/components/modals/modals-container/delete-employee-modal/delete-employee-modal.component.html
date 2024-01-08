@@ -1,0 +1,6 @@
+<h2>Delete Employee?</h2>
+<p>This will delete the record for {{ employee?.name }}</p>
+<div>
+  <input type="button" value="Confirm" (click)="onDeleteEmployee.emit(employee)" />
+  <input type="button" value="Cancel" (click)="closeModal.emit()" />
+</div>
