@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { EmployeeModalEvent } from 'src/types/modalTypes';
 import { Employee } from '../types/employee';
@@ -12,6 +12,7 @@ import { EmployeeSearchService } from './services/employee-search/employee-searc
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
+  @ViewChild('container', { static: true }) modalContainerRef: ElementRef | undefined;
   public displayedEmployees: Employee[] = [];
   public allEmployees: Employee[] = [];
   public currentEmployee: Employee | null = null;
@@ -57,14 +58,22 @@ export class AppComponent implements OnInit {
     modal.style.display = 'block';
   }
 
-  public closeAllModals() {
+  public closeAllModals(event?: Event) {
+    if (
+      event?.currentTarget === this.modalContainerRef?.nativeElement &&
+      event?.target !== event?.currentTarget
+    ) {
+      event?.stopImmediatePropagation();
+      return;
+    }
+
     const modals = document.querySelectorAll(`#modals-container .modal`);
     modals.forEach((modal) => {
       if (!modal || !(modal instanceof HTMLElement)) return;
       modal.style.display = 'none';
     });
 
-    const modalContainer = document.getElementById('modals-container');
+    const modalContainer = this.modalContainerRef?.nativeElement;
     if (!modalContainer) {
       console.error('modal container not found');
       return;

@@ -16,9 +16,9 @@
     <p>No employees found!</p>
   </div>
 </div>
-<div id="modals-container" (click)="closeAllModals()">
+<div id="modals-container" #container (click)="closeAllModals($event)">
   <!-- Add Employee Modal -->
-  <div id="addEmployee" class="modal" (click)="$event.stopImmediatePropagation()">
+  <div id="addEmployee" class="modal">
     <h2>Add Employee</h2>
     <form #addForm="ngForm" (ngSubmit)="onAddEmployee(addForm)">
       <div class="modal-input">
@@ -49,7 +49,7 @@
   </div>
 
   <!-- Edit Employee Modal -->
-  <div id="editEmployee" class="modal" (click)="$event.stopImmediatePropagation()">
+  <div id="editEmployee" class="modal">
     <h2>Edit Employee</h2>
     <form #editForm="ngForm" (ngSubmit)="onEditEmployee(editForm.value)">
       <input type="hidden" name="id" id="edit_id" ngModel="{{ currentEmployee?.id }}" />
@@ -87,7 +87,7 @@
   </div>
 
   <!-- Delete Employee Modal -->
-  <div id="deleteEmployee" class="modal" (click)="$event.stopImmediatePropagation()">
+  <div id="deleteEmployee" class="modal">
     <h2>Delete Employee?</h2>
     <p>This will delete the record for {{ currentEmployee?.name }}</p>
     <div>
