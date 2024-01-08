@@ -20,9 +20,6 @@ To run the backend services:
 ```sh
 # Bring up Postgres:
 docker compose up -d db
-
-# Enter Postgres CLI & Create DB:
-docker exec -it angular-spring-backend-db psql -U postgres -c 'CREATE DATABASE employeemanager;'
 ```
 
 After this you can start up the backend API:
