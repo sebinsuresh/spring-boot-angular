@@ -73,3 +73,12 @@ docker compose down --volumes
 ### Adding data
 
 Use the postman collection to create data
+
+## TODOs
+
+- Adding tests for API
+- Adding tests for UI
+- Validators for API
+- API spec generation
+- UI: Better organization of components
+- UI: ??
