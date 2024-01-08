@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { EmployeeModalEvent } from 'src/types/modalTypes';
 import { Employee } from '../types/employee';
-import { EmployeeService } from './employee.service';
+import { EmployeeService } from './services/employee/employee.service';
 
 @Component({
   selector: 'app-root',
