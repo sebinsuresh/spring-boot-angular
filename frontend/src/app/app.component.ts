@@ -12,7 +12,7 @@ import { NgForm } from '@angular/forms';
 })
 export class AppComponent implements OnInit {
   public displayedEmployees: Employee[] = [];
-  private employees: Employee[] = [];
+  private allEmployees: Employee[] = [];
   public currentEmployee: Employee | null = null;
 
   constructor(private employeeService: EmployeeService) {}
@@ -24,13 +24,13 @@ export class AppComponent implements OnInit {
   public getEmployees(): void {
     this.employeeService.getEmployees().subscribe({
       next: (response) => {
-        this.employees = response;
-        this.employees.sort((employee1, employee2) => employee1.id - employee2.id);
-        this.displayedEmployees = this.employees;
+        this.allEmployees = response;
+        this.allEmployees.sort((employee1, employee2) => employee1.id - employee2.id);
+        this.displayedEmployees = this.allEmployees;
       },
       error: (error: HttpErrorResponse) => {
         console.error(error.message);
-        this.employees = [];
+        this.allEmployees = [];
       },
     });
   }
@@ -125,9 +125,9 @@ export class AppComponent implements OnInit {
 
   public onSearchEmployee(event: Event) {
     const key = (event.target as HTMLInputElement)?.value?.trim().toLowerCase();
-    if (!key) this.displayedEmployees = this.employees;
+    if (!key) this.displayedEmployees = this.allEmployees;
 
-    this.displayedEmployees = this.employees.filter(
+    this.displayedEmployees = this.allEmployees.filter(
       (e) =>
         e.email.toLowerCase().indexOf(key) !== -1 ||
         e.name.toLowerCase().indexOf(key) !== -1 ||
