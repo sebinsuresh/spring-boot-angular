@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { EmployeeModalEvent } from 'src/types/modalTypes';
 import { Employee } from '../types/employee';
+import { EmployeeSearchService } from './services/employee-search/employee-search.service';
 import { EmployeeService } from './services/employee/employee.service';
 
 @Component({
@@ -15,7 +16,10 @@ export class AppComponent implements OnInit {
   private allEmployees: Employee[] = [];
   public currentEmployee: Employee | null = null;
 
-  constructor(private employeeService: EmployeeService) {}
+  constructor(
+    private employeeService: EmployeeService,
+    private employeeSearchService: EmployeeSearchService,
+  ) {}
 
   ngOnInit(): void {
     this.getEmployees();
@@ -124,14 +128,7 @@ export class AppComponent implements OnInit {
   }
 
   public onSearchEmployee(event: Event) {
-    const key = (event.target as HTMLInputElement)?.value?.trim().toLowerCase();
-    if (!key) this.displayedEmployees = this.allEmployees;
-
-    this.displayedEmployees = this.allEmployees.filter(
-      (e) =>
-        e.email.toLowerCase().indexOf(key) !== -1 ||
-        e.name.toLowerCase().indexOf(key) !== -1 ||
-        e.jobTitle.toLowerCase().indexOf(key) !== -1,
-    );
+    const key = (event.target as HTMLInputElement)?.value;
+    this.displayedEmployees = this.employeeSearchService.findEmployees(this.allEmployees, key);
   }
 }
