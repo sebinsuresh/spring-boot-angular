@@ -39,10 +39,6 @@ export class AppComponent implements OnInit {
     });
   }
 
-  public logMessage(...args: any[]) {
-    console.log(...args);
-  }
-
   public onOpenModal(event: EmployeeModalEvent) {
     this.currentEmployee = event.data;
 
