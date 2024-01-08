@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Employee } from '../../types/employee';
-import { EmployeeSearchService } from '../services/employee-search/employee-search.service';
+import { Employee } from '../../../types/employee';
+import { EmployeeSearchService } from '../../services/employee-search/employee-search.service';
 
 @Component({
   // Mark data input as required. https://stackoverflow.com/a/50293330

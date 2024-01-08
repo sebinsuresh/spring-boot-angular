@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { EmployeeModalEvent, ModalModes } from 'src/types/modalTypes';
-import { Employee } from '../../types/employee';
+import { Employee } from '../../../types/employee';
 
 @Component({
   selector: 'app-employee-card',
