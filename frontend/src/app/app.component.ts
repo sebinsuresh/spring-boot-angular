@@ -1,9 +1,9 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { EmployeeModalEvent } from 'src/types/modalTypes';
 import { Employee } from '../types/employee';
 import { EmployeeService } from './employee.service';
-import { HttpErrorResponse } from '@angular/common/http';
-import { EmployeeModalEvent, ModalModes } from 'src/types/modalTypes';
-import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
