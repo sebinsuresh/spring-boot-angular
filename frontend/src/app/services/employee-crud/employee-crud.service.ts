@@ -9,7 +9,7 @@ import { Employee } from '../../../types/employee';
   // `EmployeeService` to app.module.ts's `providers` array
   providedIn: 'root',
 })
-export class EmployeeService {
+export class EmployeeCrudService {
   private apiServerUrl = environment.apiBaseUrl;
 
   constructor(private http: HttpClient) {}

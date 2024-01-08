@@ -3,8 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { EmployeeModalEvent } from 'src/types/modalTypes';
 import { Employee } from '../types/employee';
+import { EmployeeCrudService } from './services/employee-crud/employee-crud.service';
 import { EmployeeSearchService } from './services/employee-search/employee-search.service';
-import { EmployeeService } from './services/employee/employee.service';
 
 @Component({
   selector: 'app-root',
@@ -17,7 +17,7 @@ export class AppComponent implements OnInit {
   public currentEmployee: Employee | null = null;
 
   constructor(
-    private employeeService: EmployeeService,
+    private employeeService: EmployeeCrudService,
     private employeeSearchService: EmployeeSearchService,
   ) {}
 
