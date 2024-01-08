@@ -1,7 +1,10 @@
 <nav>
   <span class="logo">Employee Manager</span>
   <a href="#" (click)="onOpenModal({ data: null, mode: 'add' })">Add Employee</a>
-  <input type="text" class="search" placeholder="search for employees" (input)="onSearchEmployee($event)" />
+  <app-employee-search
+    [data]="allEmployees"
+    (onSearchResult)="displayedEmployees = $event"
+  ></app-employee-search>
 </nav>
 <div class="employee-container">
   <app-employee-card

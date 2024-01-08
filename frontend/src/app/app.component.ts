@@ -13,7 +13,7 @@ import { EmployeeService } from './services/employee/employee.service';
 })
 export class AppComponent implements OnInit {
   public displayedEmployees: Employee[] = [];
-  private allEmployees: Employee[] = [];
+  public allEmployees: Employee[] = [];
   public currentEmployee: Employee | null = null;
 
   constructor(
