@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Employee } from './employee';
+import { Employee } from '../types/employee';
 import { EmployeeService } from './employee.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ModalModes } from 'src/types/modalModes';
+import { EmployeeModalEvent, ModalModes } from 'src/types/modalTypes';
 import { NgForm } from '@angular/forms';
 
 @Component({
@@ -39,8 +39,8 @@ export class AppComponent implements OnInit {
     console.log(...args);
   }
 
-  public onOpenModal(employee: Employee | null, mode: ModalModes) {
-    this.currentEmployee = employee;
+  public onOpenModal(event: EmployeeModalEvent) {
+    this.currentEmployee = event.data;
 
     const modalContainer = document.getElementById('modals-container');
     if (!modalContainer) {
@@ -49,9 +49,9 @@ export class AppComponent implements OnInit {
     }
     modalContainer.style.display = 'block';
 
-    const modal = document.getElementById(`${mode}Employee`);
+    const modal = document.getElementById(`${event.mode}Employee`);
     if (!modal) {
-      console.error(`modal for ${mode} not found`);
+      console.error(`modal for ${event.mode} not found`);
       return;
     }
     modal.style.display = 'block';

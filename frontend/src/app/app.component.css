@@ -30,32 +30,6 @@ nav a:hover {
   margin-left: 20px;
 }
 
-.employee-card {
-  display: inline-block;
-  border: 1px solid #c5c5c5;
-  box-sizing: border-box;
-  border-radius: 10px;
-  padding: 10px;
-  margin: 10px;
-  text-align: center;
-  background-color: white;
-
-  width: 220px;
-  height: 320px;
-
-  overflow: scroll; /* Cards have different top value without this */
-  -ms-overflow-style: none; /* Internet Explorer 10+ */
-  scrollbar-width: none;
-}
-
-.employee-card::-webkit-scrollbar {
-  display: none; /* Safari and Chrome */
-}
-
-.employee-card img {
-  width: 150px;
-}
-
 #modals-container {
   width: 100%;
   height: 100%;

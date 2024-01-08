@@ -1,0 +1,12 @@
+<div class="employee-card">
+  <img src="{{ employee?.imageUrl }}" alt="Image of Employee" />
+  <div>{{ employee?.name }}</div>
+  <div>{{ employee?.jobTitle }}</div>
+  <div>{{ employee?.email }}</div>
+  <div>{{ employee?.phone }}</div>
+
+  <div class="employee-button-container">
+    <input type="button" value="✏️" (click)="onModalEvent('edit')" />
+    <input type="button" value="❌" (click)="onModalEvent('delete')" />
+  </div>
+</div>
