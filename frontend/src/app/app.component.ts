@@ -1,8 +1,9 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { EmployeeModalEvent } from 'src/types/modalTypes';
 import { Employee } from '../types/employee';
+import { ModalsContainerComponent } from './components/modals/modals-container/modals-container.component';
 import { EmployeeCrudService } from './services/employee-crud/employee-crud.service';
 import { EmployeeSearchService } from './services/employee-search/employee-search.service';
 
@@ -12,10 +13,10 @@ import { EmployeeSearchService } from './services/employee-search/employee-searc
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
-  @ViewChild('container', { static: true }) modalContainerRef: ElementRef | undefined;
+  @ViewChild(ModalsContainerComponent) private modalsContainerRef!: ModalsContainerComponent;
+
   public displayedEmployees: Employee[] = [];
   public allEmployees: Employee[] = [];
-  public currentEmployee: Employee | null = null;
 
   constructor(
     private employeeService: EmployeeCrudService,
@@ -40,49 +41,8 @@ export class AppComponent implements OnInit {
     });
   }
 
-  public onOpenModal(event: EmployeeModalEvent) {
-    this.currentEmployee = event.data;
-
-    const modalContainer = document.getElementById('modals-container');
-    if (!modalContainer) {
-      console.error('modal container not found');
-      return;
-    }
-    modalContainer.style.display = 'block';
-
-    const modal = document.getElementById(`${event.mode}Employee`);
-    if (!modal) {
-      console.error(`modal for ${event.mode} not found`);
-      return;
-    }
-    modal.style.display = 'block';
-  }
-
-  public closeAllModals(event?: Event) {
-    if (
-      event?.currentTarget === this.modalContainerRef?.nativeElement &&
-      event?.target !== event?.currentTarget
-    ) {
-      event?.stopImmediatePropagation();
-      return;
-    }
-
-    const modals = document.querySelectorAll(`#modals-container .modal`);
-    modals.forEach((modal) => {
-      if (!modal || !(modal instanceof HTMLElement)) return;
-      modal.style.display = 'none';
-    });
-
-    const modalContainer = this.modalContainerRef?.nativeElement;
-    if (!modalContainer) {
-      console.error('modal container not found');
-      return;
-    }
-    modalContainer.style.display = 'none';
-  }
-
   public onAddEmployee(form: NgForm) {
-    this.closeAllModals();
+    this.closeModals();
     this.employeeService
       .addEmployee(form.value)
       .subscribe({
@@ -98,14 +58,9 @@ export class AppComponent implements OnInit {
       });
   }
 
-  public onEditEmployee(employee: Employee | null) {
-    if (!employee) {
-      console.error('No employee selected for edit');
-      return;
-    }
-
-    this.closeAllModals();
-    this.employeeService.updateEmployee(employee).subscribe({
+  public onEditEmployee(form: NgForm) {
+    this.closeModals();
+    this.employeeService.updateEmployee(form.value).subscribe({
       next: () => {
         this.getEmployees();
       },
@@ -115,13 +70,13 @@ export class AppComponent implements OnInit {
     });
   }
 
-  public onDeleteEmployee(employee: Employee | null) {
+  public onDeleteEmployee(employee: Employee | undefined) {
     if (!employee) {
-      console.error('No employee selected for edit');
+      console.error('No employee selected for delete');
       return;
     }
 
-    this.closeAllModals();
+    this.closeModals();
     this.employeeService.deleteEmployee(employee.id).subscribe({
       next: () => {
         this.getEmployees();
@@ -132,8 +87,16 @@ export class AppComponent implements OnInit {
     });
   }
 
+  public onOpenModal(event: EmployeeModalEvent) {
+    this.modalsContainerRef.onOpenModal(event);
+  }
+
   public onSearchEmployee(event: Event) {
     const key = (event.target as HTMLInputElement)?.value;
     this.displayedEmployees = this.employeeSearchService.findEmployees(this.allEmployees, key);
+  }
+
+  private closeModals() {
+    this.modalsContainerRef.closeAllModals();
   }
 }

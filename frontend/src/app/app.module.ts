@@ -5,9 +5,21 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { EmployeeCardComponent } from './components/employee-card/employee-card.component';
 import { EmployeeSearchComponent } from './components/employee-search/employee-search.component';
+import { AddEmployeeModalComponent } from './components/modals/modals-container/add-employee-modal/add-employee-modal.component';
+import { DeleteEmployeeModalComponent } from './components/modals/modals-container/delete-employee-modal/delete-employee-modal.component';
+import { EditEmployeeModalComponent } from './components/modals/modals-container/edit-employee-modal/edit-employee-modal.component';
+import { ModalsContainerComponent } from './components/modals/modals-container/modals-container.component';
 
 @NgModule({
-  declarations: [AppComponent, EmployeeCardComponent, EmployeeSearchComponent],
+  declarations: [
+    AppComponent,
+    EmployeeCardComponent,
+    EmployeeSearchComponent,
+    ModalsContainerComponent,
+    AddEmployeeModalComponent,
+    EditEmployeeModalComponent,
+    DeleteEmployeeModalComponent,
+  ],
   imports: [BrowserModule, HttpClientModule, FormsModule],
   providers: [],
   bootstrap: [AppComponent],
