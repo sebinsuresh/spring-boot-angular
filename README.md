@@ -67,6 +67,21 @@ docker compose down
 docker compose down --volumes
 ```
 
+If this fails on Windows machines, the likely reason is that you have CRLF line endings in one of the shell scripts / mvnw files.
+
+To fix in the short term, use:
+```sh
+dos2unix <path-to-file>
+# e.g.:
+dos2unix backend/mvnw
+```
+
+You can have git disable the automatic conversion of LF to CRLF files by running:
+```sh
+git config core.autocrlf false
+```
+You may also want to reset the line ending changes in all files that show up now in git status.
+
 ### Adding data
 
 Use the postman collection to create data
