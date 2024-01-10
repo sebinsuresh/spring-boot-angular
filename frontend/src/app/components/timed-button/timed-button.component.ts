@@ -25,12 +25,10 @@ export class TimedButtonComponent implements OnInit {
     this.displayedText = this.getCountDownText(0);
 
     // TODO: destroy needed?
-    this.countdownToggle$?.subscribe((start) =>
-      start ? this.startTheCountDown() : this.resetTheCountDown(),
-    );
+    this.countdownToggle$?.subscribe((start) => (start ? this.startCountdown() : this.resetCountdown()));
   }
 
-  private startTheCountDown() {
+  private startCountdown() {
     this.isDisabled = true;
     this.countDownSubscription = interval(countDownInterval)
       .pipe(take(this.countdownTime))
@@ -45,7 +43,7 @@ export class TimedButtonComponent implements OnInit {
       });
   }
 
-  private resetTheCountDown() {
+  private resetCountdown() {
     if (this.countDownSubscription) {
       this.countDownSubscription.unsubscribe();
       this.displayedText = this.getCountDownText(0);
