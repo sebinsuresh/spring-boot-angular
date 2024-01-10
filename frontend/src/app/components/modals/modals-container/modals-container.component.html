@@ -4,6 +4,7 @@
     class="modal"
     (closeModal)="closeAllModals()"
     (onSubmit)="onAddEmployee.emit($event)"
+    [modalEvent$]="modalEvent$"
   ></app-add-employee-modal>
   <app-edit-employee-modal
     id="editEmployee"
@@ -11,6 +12,7 @@
     (closeModal)="closeAllModals()"
     (onSubmit)="onEditEmployee.emit($event)"
     [employee]="currentEmployee"
+    [modalEvent$]="modalEvent$"
   ></app-edit-employee-modal>
   <app-delete-employee-modal
     id="deleteEmployee"
@@ -18,5 +20,6 @@
     (closeModal)="closeAllModals()"
     (onDeleteEmployee)="onDeleteEmployee.emit($event)"
     [employee]="currentEmployee"
+    [modalEvent$]="modalEvent$"
   ></app-delete-employee-modal>
 </div>

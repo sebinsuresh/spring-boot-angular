@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Subject } from 'rxjs';
 import { Employee } from 'src/types/employee';
+import { ModalEvent, ModalModes } from 'src/types/modalTypes';
 
 @Component({
   selector: 'app-delete-employee-modal',
@@ -8,9 +10,13 @@ import { Employee } from 'src/types/employee';
 })
 export class DeleteEmployeeModalComponent implements OnInit {
   // TODO: Refactor these using Directive? https://stackoverflow.com/a/70099300
+  @Input() employee: Employee | undefined;
+  @Input() modalEvent$?: Subject<ModalEvent>;
   @Output() closeModal = new EventEmitter();
   @Output() onDeleteEmployee = new EventEmitter<Employee>();
-  @Input() employee: Employee | undefined;
+
+  public static readonly mode: ModalModes = 'delete';
+  public confirmCountDownToggle$ = new Subject<boolean>();
 
   constructor() {}
 
@@ -18,6 +24,21 @@ export class DeleteEmployeeModalComponent implements OnInit {
     if (!this.closeModal || !this.onDeleteEmployee) {
       throw new Error('required input functions not provided');
     }
+
+    this.modalEvent$?.subscribe((evt) => {
+      if (evt.modal === DeleteEmployeeModalComponent.mode) {
+        switch (evt.action) {
+          case 'open':
+            this.confirmCountDownToggle$.next(true);
+            break;
+          case 'close':
+            this.confirmCountDownToggle$.next(false);
+            break;
+          default:
+            break;
+        }
+      }
+    });
   }
 
   // TODO: Add countdown confirmation for modal button

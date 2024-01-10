@@ -6,3 +6,8 @@ export type EmployeeModalEvent = {
   data?: Employee;
   mode: ModalModes;
 };
+
+export type ModalEvent = {
+  modal: ModalModes;
+  action: 'open' | 'close';
+};

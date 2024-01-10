@@ -1,6 +1,10 @@
 <h2>Delete Employee?</h2>
 <p>This will delete the record for {{ employee?.name }}</p>
 <div>
-  <input type="button" value="Confirm" (click)="onDeleteEmployee.emit(employee)" />
+  <app-timed-button
+    buttonText="Confirm"
+    (onClick)="onDeleteEmployee.emit(employee)"
+    [countdownToggle$]="confirmCountDownToggle$"
+  ></app-timed-button>
   <input type="button" value="Cancel" (click)="closeModal.emit()" />
 </div>
