@@ -1,7 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Subject } from 'rxjs';
+import { ModalEventService } from 'src/app/services/modal-event/modal-event.service';
 import { Employee } from 'src/types/employee';
-import { ModalEvent, ModalModes } from 'src/types/modalTypes';
+import { ModalModes } from 'src/types/modalTypes';
 
 @Component({
   selector: 'app-delete-employee-modal',
@@ -11,21 +12,20 @@ import { ModalEvent, ModalModes } from 'src/types/modalTypes';
 export class DeleteEmployeeModalComponent implements OnInit {
   // TODO: Refactor these using Directive? https://stackoverflow.com/a/70099300
   @Input() employee: Employee | undefined;
-  @Input() modalEvent$?: Subject<ModalEvent>;
   @Output() closeModal = new EventEmitter();
   @Output() onDeleteEmployee = new EventEmitter<Employee>();
 
   public static readonly mode: ModalModes = 'delete';
   public confirmCountDownToggle$ = new Subject<boolean>();
 
-  constructor() {}
+  constructor(private modalEventService: ModalEventService) {}
 
   ngOnInit(): void {
     if (!this.closeModal || !this.onDeleteEmployee) {
       throw new Error('required input functions not provided');
     }
 
-    this.modalEvent$?.subscribe((evt) => {
+    this.modalEventService.getObservable().subscribe((evt) => {
       if (evt.modal === DeleteEmployeeModalComponent.mode) {
         switch (evt.action) {
           case 'open':
