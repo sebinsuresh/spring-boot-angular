@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Employee } from 'src/types/employee';
+import { ModalModes } from 'src/types/modalTypes';
 
 @Component({
   selector: 'app-edit-employee-modal',
@@ -12,6 +13,8 @@ export class EditEmployeeModalComponent implements OnInit {
   @Input() employee: Employee | undefined;
   @Output() closeModal = new EventEmitter();
   @Output() onSubmit = new EventEmitter<NgForm>();
+
+  public static readonly mode: ModalModes = 'edit';
 
   constructor() {}
 

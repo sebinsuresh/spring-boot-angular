@@ -1,5 +1,6 @@
 import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { ModalEventService } from 'src/app/services/modal-event/modal-event.service';
 import { Employee } from 'src/types/employee';
 import { EmployeeModalEvent } from 'src/types/modalTypes';
 
@@ -16,7 +17,7 @@ export class ModalsContainerComponent implements OnInit {
 
   public currentEmployee: Employee | undefined;
 
-  constructor() {}
+  constructor(private modalEventHandler: ModalEventService) {}
 
   ngOnInit(): void {
     if (!this.onAddEmployee || !this.onEditEmployee || !this.onDeleteEmployee) {
@@ -40,6 +41,8 @@ export class ModalsContainerComponent implements OnInit {
       return;
     }
     modal.style.display = 'block';
+
+    this.modalEventHandler.emit({ action: 'open', modal: event.mode });
   }
 
   public closeAllModals(event?: Event): void {
@@ -59,6 +62,10 @@ export class ModalsContainerComponent implements OnInit {
       if (!(modal instanceof HTMLElement)) return;
       modal.style.display = 'none';
     });
+    // TODO: Add attribute on modal html & read that in above loop?
+    this.modalEventHandler.emit({ action: 'close', modal: 'add' });
+    this.modalEventHandler.emit({ action: 'close', modal: 'delete' });
+    this.modalEventHandler.emit({ action: 'close', modal: 'edit' });
 
     modalContainer.style.display = 'none';
   }

@@ -9,6 +9,7 @@ import { AddEmployeeModalComponent } from './components/modals/modals-container/
 import { DeleteEmployeeModalComponent } from './components/modals/modals-container/delete-employee-modal/delete-employee-modal.component';
 import { EditEmployeeModalComponent } from './components/modals/modals-container/edit-employee-modal/edit-employee-modal.component';
 import { ModalsContainerComponent } from './components/modals/modals-container/modals-container.component';
+import { TimedButtonComponent } from './components/timed-button/timed-button.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { ModalsContainerComponent } from './components/modals/modals-container/m
     AddEmployeeModalComponent,
     EditEmployeeModalComponent,
     DeleteEmployeeModalComponent,
+    TimedButtonComponent,
   ],
   imports: [BrowserModule, HttpClientModule, FormsModule],
   providers: [],
