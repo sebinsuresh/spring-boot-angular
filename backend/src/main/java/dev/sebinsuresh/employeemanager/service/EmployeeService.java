@@ -35,10 +35,16 @@ public class EmployeeService {
     }
 
     public Employee updateEmployee(Employee employee) {
+        if (employee == null) {
+            throw new NullPointerException("Employee cannot be null");
+        }
         return employeeRepo.save(employee);
     }
 
     public void deleteEmployee(Long id) {
+        if (id == null) {
+            throw new NullPointerException("Employee cannot be null");
+        }
         employeeRepo.deleteById(id);
     }
 }
