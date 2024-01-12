@@ -33,6 +33,13 @@ sdk env
 ./mvnw spring-boot:run
 ```
 
+To start up the application with debugger port 5005 open, use:
+```sh
+mvn spring-boot:run \
+    -Dspring-boot.run.jvmArguments="-Xdebug \
+          -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5005"
+```
+
 ## Frontend
 
 Using:
