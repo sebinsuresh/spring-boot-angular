@@ -19,11 +19,7 @@ export class ModalsContainerComponent implements OnInit {
 
   constructor(private modalEventHandler: ModalEventService) {}
 
-  ngOnInit(): void {
-    if (!this.onAddEmployee || !this.onEditEmployee || !this.onDeleteEmployee) {
-      throw new Error('required input functions not provided');
-    }
-  }
+  ngOnInit(): void {}
 
   public onOpenModal(event: EmployeeModalEvent) {
     this.currentEmployee = event.data;
