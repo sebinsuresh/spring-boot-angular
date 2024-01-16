@@ -2,7 +2,7 @@ import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '
 import { NgForm } from '@angular/forms';
 import { ModalEventService } from 'src/app/services/modal-event/modal-event.service';
 import { Employee } from 'src/types/employee';
-import { ModalEvent } from 'src/types/modalTypes';
+import { ModalEvent, ModalTypes } from 'src/types/modalTypes';
 
 @Component({
   selector: 'app-modals-container',
@@ -54,11 +54,11 @@ export class ModalsContainerComponent implements OnInit {
     modals.forEach((modal) => {
       if (!(modal instanceof HTMLElement)) return;
       modal.style.display = 'none';
+
+      // TODO: Better approach?
+      const modalType = modal.id.replace('Employee', '');
+      this.modalEventHandler.emit({ event: 'cancel', modal: modalType as ModalTypes });
     });
-    // TODO: Add attribute on modal html & read that in above loop?
-    this.modalEventHandler.emit({ event: 'cancel', modal: 'add' });
-    this.modalEventHandler.emit({ event: 'cancel', modal: 'delete' });
-    this.modalEventHandler.emit({ event: 'cancel', modal: 'edit' });
 
     modalContainer.style.display = 'none';
   }
