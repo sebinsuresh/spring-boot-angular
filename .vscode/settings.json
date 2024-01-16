@@ -1,0 +1,12 @@
+{
+    "java.compile.nullAnalysis.mode": "automatic",
+    "editor.codeActionsOnSave": {
+        "source.organizeImports": "always"
+    },
+    "editor.formatOnSave": true,
+    "editor.inlineSuggest.enabled": false,
+    "cSpell.words": [
+        "Configurer",
+        "Employeemanager"
+    ]
+}
