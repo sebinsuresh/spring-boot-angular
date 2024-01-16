@@ -1,6 +1,6 @@
 <nav>
   <span class="logo">Employee Manager</span>
-  <a href="#" (click)="onOpenModal({ mode: 'add' })">Add Employee</a>
+  <a href="#" (click)="onOpenModal({ modal: 'add', event: 'open' })">Add Employee</a>
   <app-employee-search
     [data]="allEmployees"
     (onSearchResult)="displayedEmployees = $event"

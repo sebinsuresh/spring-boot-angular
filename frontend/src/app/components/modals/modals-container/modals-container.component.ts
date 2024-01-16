@@ -2,7 +2,7 @@ import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '
 import { NgForm } from '@angular/forms';
 import { ModalEventService } from 'src/app/services/modal-event/modal-event.service';
 import { Employee } from 'src/types/employee';
-import { EmployeeModalEvent } from 'src/types/modalTypes';
+import { ModalEvent } from 'src/types/modalTypes';
 
 @Component({
   selector: 'app-modals-container',
@@ -21,7 +21,7 @@ export class ModalsContainerComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  public onOpenModal(event: EmployeeModalEvent) {
+  public onOpenModal(event: ModalEvent) {
     this.currentEmployee = event.data;
 
     const modalContainer = this.modalsContainerRef?.nativeElement;
@@ -31,14 +31,14 @@ export class ModalsContainerComponent implements OnInit {
     }
     modalContainer.style.display = 'block';
 
-    const modal = document.getElementById(`${event.mode}Employee`);
+    const modal = document.getElementById(`${event.modal}Employee`);
     if (!modal) {
-      console.error(`modal for ${event.mode} not found`);
+      console.error(`modal for ${event.modal} not found`);
       return;
     }
     modal.style.display = 'block';
 
-    this.modalEventHandler.emit({ action: 'open', modal: event.mode });
+    this.modalEventHandler.emit({ event: 'open', modal: event.modal });
   }
 
   public closeAllModals(event?: Event): void {
@@ -59,9 +59,9 @@ export class ModalsContainerComponent implements OnInit {
       modal.style.display = 'none';
     });
     // TODO: Add attribute on modal html & read that in above loop?
-    this.modalEventHandler.emit({ action: 'close', modal: 'add' });
-    this.modalEventHandler.emit({ action: 'close', modal: 'delete' });
-    this.modalEventHandler.emit({ action: 'close', modal: 'edit' });
+    this.modalEventHandler.emit({ event: 'cancel', modal: 'add' });
+    this.modalEventHandler.emit({ event: 'cancel', modal: 'delete' });
+    this.modalEventHandler.emit({ event: 'cancel', modal: 'edit' });
 
     modalContainer.style.display = 'none';
   }

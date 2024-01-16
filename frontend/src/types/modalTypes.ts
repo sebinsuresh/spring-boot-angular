@@ -1,13 +1,11 @@
 import { Employee } from 'src/types/employee';
 
-export type ModalModes = 'add' | 'edit' | 'delete';
+export type ModalTypes = 'add' | 'edit' | 'delete';
 
-export type EmployeeModalEvent = {
-  data?: Employee;
-  mode: ModalModes;
-};
+export type ModalEventTypes = 'open' | 'confirm' | 'cancel';
 
 export type ModalEvent = {
-  modal: ModalModes;
-  action: 'open' | 'close';
+  modal: ModalTypes;
+  event: ModalEventTypes;
+  data?: Employee;
 };

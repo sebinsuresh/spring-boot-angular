@@ -1,7 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { EmployeeModalEvent } from 'src/types/modalTypes';
+import { ModalEvent } from 'src/types/modalTypes';
 import { Employee } from '../types/employee';
 import { ModalsContainerComponent } from './components/modals/modals-container/modals-container.component';
 import { EmployeeCrudService } from './services/employee-crud/employee-crud.service';
@@ -87,7 +87,7 @@ export class AppComponent implements OnInit {
     });
   }
 
-  public onOpenModal(event: EmployeeModalEvent) {
+  public onOpenModal(event: ModalEvent) {
     this.modalsContainerRef.onOpenModal(event);
   }
 

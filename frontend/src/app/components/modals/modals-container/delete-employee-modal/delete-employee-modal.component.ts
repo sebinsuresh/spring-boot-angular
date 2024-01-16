@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Subject } from 'rxjs';
 import { ModalEventService } from 'src/app/services/modal-event/modal-event.service';
 import { Employee } from 'src/types/employee';
-import { ModalModes } from 'src/types/modalTypes';
+import { ModalTypes } from 'src/types/modalTypes';
 
 @Component({
   selector: 'app-delete-employee-modal',
@@ -15,7 +15,7 @@ export class DeleteEmployeeModalComponent implements OnInit {
   @Output() closeModal = new EventEmitter();
   @Output() onDeleteEmployee = new EventEmitter<Employee>();
 
-  public static readonly mode: ModalModes = 'delete';
+  public static readonly mode: ModalTypes = 'delete';
   public confirmCountDownToggle$ = new Subject<boolean>();
 
   constructor(private modalEventService: ModalEventService) {}
@@ -27,11 +27,11 @@ export class DeleteEmployeeModalComponent implements OnInit {
 
     this.modalEventService.getObservable().subscribe((evt) => {
       if (evt.modal === DeleteEmployeeModalComponent.mode) {
-        switch (evt.action) {
+        switch (evt.event) {
           case 'open':
             this.confirmCountDownToggle$.next(true);
             break;
-          case 'close':
+          case 'cancel':
             this.confirmCountDownToggle$.next(false);
             break;
           default:
