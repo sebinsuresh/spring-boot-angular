@@ -40,6 +40,4 @@ export class DeleteEmployeeModalComponent implements OnInit {
       }
     });
   }
-
-  // TODO: Add countdown confirmation for modal button
 }
