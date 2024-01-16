@@ -13,14 +13,14 @@ export class ModalsContainerComponent implements OnInit {
   @Output() onAddEmployee = new EventEmitter<NgForm>();
   @Output() onEditEmployee = new EventEmitter<NgForm>();
   @Output() onDeleteEmployee = new EventEmitter<Employee>();
-  @ViewChild('container', { static: true }) private modalsContainerRef!: ElementRef<HTMLElement>;
+  @ViewChild('container', { static: true }) private selfRef!: ElementRef<HTMLElement>;
 
   public currentEmployee: Employee | undefined;
 
   constructor(private modalEventHandler: ModalEventService) {}
 
   ngOnInit(): void {
-    if (!this.modalsContainerRef || !this.modalsContainerRef.nativeElement) {
+    if (!this.selfRef || !this.selfRef.nativeElement) {
       throw new Error('modal container not found');
     }
   }
@@ -28,7 +28,7 @@ export class ModalsContainerComponent implements OnInit {
   public onOpenModal(event: ModalEvent) {
     this.currentEmployee = event.data;
 
-    const modalContainer = this.modalsContainerRef.nativeElement;
+    const modalContainer = this.selfRef.nativeElement;
     modalContainer.style.display = 'block';
 
     const modal = document.getElementById(`${event.modal}Employee`);
@@ -42,7 +42,7 @@ export class ModalsContainerComponent implements OnInit {
   }
 
   public closeAllModals(event?: Event): void {
-    const modalContainer = this.modalsContainerRef.nativeElement;
+    const modalContainer = this.selfRef.nativeElement;
 
     // Only close modals when the dark background area is clicked, not when modal body/elements are clicked.
     if (event?.currentTarget === modalContainer && event?.target !== modalContainer) {
