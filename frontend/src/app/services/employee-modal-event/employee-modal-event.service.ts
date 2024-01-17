@@ -1,22 +1,22 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { ModalEvent } from 'src/types/modalTypes';
+import { EmployeeModalEvent } from 'src/types/modalTypes';
 
 @Injectable({
   providedIn: 'root',
 })
-export class ModalEventService {
+export class EmployeeModalEventService {
   private eventHandler$;
 
   constructor() {
-    this.eventHandler$ = new Subject<ModalEvent>();
+    this.eventHandler$ = new Subject<EmployeeModalEvent>();
   }
 
-  public getObservable(): Observable<ModalEvent> {
+  public getObservable(): Observable<EmployeeModalEvent> {
     return this.eventHandler$.asObservable();
   }
 
-  public emit(event: ModalEvent) {
+  public emit(event: EmployeeModalEvent) {
     this.eventHandler$.next(event);
   }
 }

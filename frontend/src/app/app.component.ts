@@ -1,10 +1,10 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { NgForm } from '@angular/forms';
 import { EmployeeModalEvent } from 'src/types/modalTypes';
 import { Employee } from '../types/employee';
 import { ModalsContainerComponent } from './components/modals/modals-container/modals-container.component';
 import { EmployeeCrudService } from './services/employee-crud/employee-crud.service';
+import { EmployeeModalEventService } from './services/employee-modal-event/employee-modal-event.service';
 import { EmployeeSearchService } from './services/employee-search/employee-search.service';
 
 @Component({
@@ -21,13 +21,33 @@ export class AppComponent implements OnInit {
   constructor(
     private employeeService: EmployeeCrudService,
     private employeeSearchService: EmployeeSearchService,
+    private modalEventService: EmployeeModalEventService,
   ) {}
 
   ngOnInit(): void {
     this.getEmployees();
+    this.modalEventService.getObservable().subscribe((event) => {
+      if (!event.data || event.event !== 'confirm') {
+        return;
+      }
+
+      switch (event.modal) {
+        case 'add':
+          this.onAddEmployee(event.data);
+          break;
+        case 'edit':
+          this.onEditEmployee(event.data);
+          break;
+        case 'delete':
+          this.onDeleteEmployee(event.data);
+          break;
+        default:
+          break;
+      }
+    });
   }
 
-  public getEmployees(): void {
+  private getEmployees(): void {
     this.employeeService.getEmployees().subscribe({
       next: (response) => {
         this.allEmployees = response;
@@ -41,26 +61,21 @@ export class AppComponent implements OnInit {
     });
   }
 
-  public onAddEmployee(form: NgForm) {
+  public onAddEmployee(employee: Employee) {
     this.closeModals();
-    this.employeeService
-      .addEmployee(form.value)
-      .subscribe({
-        next: () => {
-          this.getEmployees();
-        },
-        error: (error) => {
-          console.error(error);
-        },
-      })
-      .add(() => {
-        form.resetForm();
-      });
+    this.employeeService.addEmployee(employee).subscribe({
+      next: () => {
+        this.getEmployees();
+      },
+      error: (error) => {
+        console.error(error);
+      },
+    });
   }
 
-  public onEditEmployee(form: NgForm) {
+  public onEditEmployee(employee: Employee) {
     this.closeModals();
-    this.employeeService.updateEmployee(form.value).subscribe({
+    this.employeeService.updateEmployee(employee).subscribe({
       next: () => {
         this.getEmployees();
       },

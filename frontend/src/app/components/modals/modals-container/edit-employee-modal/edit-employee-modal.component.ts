@@ -1,7 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { EmployeeModalEventService } from 'src/app/services/employee-modal-event/employee-modal-event.service';
 import { Employee } from 'src/types/employee';
-import { ModalModes } from 'src/types/modalTypes';
+import { ModalTypes } from 'src/types/modalTypes';
 
 @Component({
   selector: 'app-edit-employee-modal',
@@ -9,18 +10,20 @@ import { ModalModes } from 'src/types/modalTypes';
   styleUrls: ['../modals.css'],
 })
 export class EditEmployeeModalComponent implements OnInit {
-  // TODO: Refactor these using Directive? https://stackoverflow.com/a/70099300
   @Input() employee: Employee | undefined;
   @Output() closeModal = new EventEmitter();
-  @Output() onSubmit = new EventEmitter<NgForm>();
 
-  public static readonly mode: ModalModes = 'edit';
+  public static readonly mode: ModalTypes = 'edit';
 
-  constructor() {}
+  constructor(private modalEventService: EmployeeModalEventService) {}
 
-  ngOnInit(): void {
-    if (!this.closeModal || !this.onSubmit) {
-      throw new Error('required input functions not provided');
-    }
+  ngOnInit(): void {}
+
+  submit(form: NgForm) {
+    this.modalEventService.emit({
+      data: form.value,
+      modal: EditEmployeeModalComponent.mode,
+      event: 'confirm',
+    });
   }
 }

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { Subject, Subscription, interval, take } from 'rxjs';
 
 const countDownInterval = 1000;
@@ -8,7 +8,7 @@ const countDownInterval = 1000;
   templateUrl: './timed-button.component.html',
   styleUrls: ['./timed-button.component.css'],
 })
-export class TimedButtonComponent implements OnInit {
+export class TimedButtonComponent implements OnInit, OnDestroy {
   @Input() public buttonText = '';
   @Input() public countdownTime = 3;
   @Input() public countdownToggle$?: Subject<boolean>;
@@ -24,8 +24,11 @@ export class TimedButtonComponent implements OnInit {
   ngOnInit(): void {
     this.displayedText = this.getCountDownText(0);
 
-    // TODO: destroy needed?
     this.countdownToggle$?.subscribe((start) => (start ? this.startCountdown() : this.resetCountdown()));
+  }
+
+  ngOnDestroy(): void {
+    this.countDownSubscription?.unsubscribe();
   }
 
   private startCountdown() {

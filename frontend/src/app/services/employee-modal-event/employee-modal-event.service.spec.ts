@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { ModalEventService } from './modal-event.service';
+import { EmployeeModalEventService } from './employee-modal-event.service';
 
 describe('ModalEventService', () => {
-  let service: ModalEventService;
+  let service: EmployeeModalEventService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(ModalEventService);
+    service = TestBed.inject(EmployeeModalEventService);
   });
 
   it('should be created', () => {

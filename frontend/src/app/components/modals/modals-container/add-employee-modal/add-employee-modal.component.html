@@ -1,5 +1,5 @@
 <h2>Add Employee</h2>
-<form #form="ngForm" (ngSubmit)="onSubmit.emit(form)">
+<form #form="ngForm" (ngSubmit)="submit(form)">
   <div class="modal-input">
     <label for="add_name">name</label>
     <input type="text" name="name" id="add_name" ngModel required />

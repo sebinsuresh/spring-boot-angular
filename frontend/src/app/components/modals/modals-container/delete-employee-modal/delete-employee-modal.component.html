@@ -3,7 +3,7 @@
 <div>
   <app-timed-button
     buttonText="Confirm"
-    (onClick)="onDeleteEmployee.emit(employee)"
+    (onClick)="submit()"
     [countdownToggle$]="confirmCountDownToggle$"
   ></app-timed-button>
   <input type="button" value="Cancel" (click)="closeModal.emit()" />

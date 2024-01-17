@@ -1,6 +1,6 @@
 <nav>
   <span class="logo">Employee Manager</span>
-  <a href="#" (click)="onOpenModal({ mode: 'add' })">Add Employee</a>
+  <a href="#" (click)="onOpenModal({ modal: 'add', event: 'open' })">Add Employee</a>
   <app-employee-search
     [data]="allEmployees"
     (onSearchResult)="displayedEmployees = $event"
@@ -10,14 +10,10 @@
   <app-employee-card
     *ngFor="let employee of displayedEmployees"
     [employee]="employee"
-    (openModal)="onOpenModal($event)"
+    (onModalEvent)="onOpenModal($event)"
   ></app-employee-card>
   <div *ngIf="!displayedEmployees?.length" class="message">
     <p>No employees found!</p>
   </div>
 </div>
-<app-modals-container
-  (onAddEmployee)="onAddEmployee($event)"
-  (onEditEmployee)="onEditEmployee($event)"
-  (onDeleteEmployee)="onDeleteEmployee($event)"
-></app-modals-container>
+<app-modals-container></app-modals-container>
