@@ -1,0 +1,11 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "check-docker",
+            "type": "shell",
+            "command": "./.vscode/check-docker.sh",
+            "problemMatcher": []
+        },
+    ]
+}
