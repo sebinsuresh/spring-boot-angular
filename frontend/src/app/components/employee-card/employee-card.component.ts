@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { ModalEvent, ModalTypes } from 'src/types/modalTypes';
+import { EmployeeModalEvent, ModalTypes } from 'src/types/modalTypes';
 import { Employee } from '../../../types/employee';
 
 @Component({
@@ -9,17 +9,17 @@ import { Employee } from '../../../types/employee';
 })
 export class EmployeeCardComponent implements OnInit {
   @Input() employee: Employee | undefined;
-  @Output() openModal = new EventEmitter<ModalEvent>();
+  @Output() onModalEvent = new EventEmitter<EmployeeModalEvent>();
 
   constructor() {}
 
   ngOnInit(): void {}
 
-  onModalEvent(mode: ModalTypes) {
+  openModal(mode: ModalTypes) {
     if (!this.employee) {
       console.error('Employee not set on card');
       return;
     }
-    this.openModal.emit({ data: this.employee, modal: mode, event: 'open' });
+    this.onModalEvent.emit({ data: this.employee, modal: mode, event: 'open' });
   }
 }

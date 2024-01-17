@@ -3,20 +3,17 @@
     id="addEmployee"
     class="modal"
     (closeModal)="closeAllModals()"
-    (onSubmit)="onAddEmployee.emit($event)"
   ></app-add-employee-modal>
   <app-edit-employee-modal
     id="editEmployee"
     class="modal"
     (closeModal)="closeAllModals()"
-    (onSubmit)="onEditEmployee.emit($event)"
     [employee]="currentEmployee"
   ></app-edit-employee-modal>
   <app-delete-employee-modal
     id="deleteEmployee"
     class="modal"
     (closeModal)="closeAllModals()"
-    (onDeleteEmployee)="onDeleteEmployee.emit($event)"
     [employee]="currentEmployee"
   ></app-delete-employee-modal>
 </div>

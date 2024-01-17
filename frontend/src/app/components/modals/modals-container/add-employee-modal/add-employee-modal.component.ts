@@ -1,5 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { EmployeeModalEventService } from 'src/app/services/employee-modal-event/employee-modal-event.service';
 import { ModalTypes } from 'src/types/modalTypes';
 
 @Component({
@@ -8,13 +9,20 @@ import { ModalTypes } from 'src/types/modalTypes';
   styleUrls: ['../modals.css'],
 })
 export class AddEmployeeModalComponent implements OnInit {
-  // TODO: Refactor inputs using Directive? https://stackoverflow.com/a/70099300
   @Output() closeModal = new EventEmitter();
-  @Output() onSubmit = new EventEmitter<NgForm>();
 
   public static readonly mode: ModalTypes = 'add';
 
-  constructor() {}
+  constructor(private modalEventService: EmployeeModalEventService) {}
 
   ngOnInit(): void {}
+
+  submit(form: NgForm) {
+    this.modalEventService.emit({
+      data: form.value,
+      event: 'confirm',
+      modal: AddEmployeeModalComponent.mode,
+    });
+    form.reset();
+  }
 }

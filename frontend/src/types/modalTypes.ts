@@ -4,7 +4,7 @@ export type ModalTypes = 'add' | 'edit' | 'delete';
 
 export type ModalEventTypes = 'open' | 'confirm' | 'cancel';
 
-export type ModalEvent = {
+export type EmployeeModalEvent = {
   modal: ModalTypes;
   event: ModalEventTypes;
   data?: Employee;

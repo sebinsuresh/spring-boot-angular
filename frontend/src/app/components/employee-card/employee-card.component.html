@@ -6,7 +6,7 @@
   <div>{{ employee?.phone }}</div>
 
   <div class="employee-button-container">
-    <input type="button" value="✏️" (click)="onModalEvent('edit')" />
-    <input type="button" value="❌" (click)="onModalEvent('delete')" />
+    <input type="button" value="✏️" (click)="openModal('edit')" />
+    <input type="button" value="❌" (click)="openModal('delete')" />
   </div>
 </div>

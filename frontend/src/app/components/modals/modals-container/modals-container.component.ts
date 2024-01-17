@@ -1,8 +1,7 @@
-import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
-import { NgForm } from '@angular/forms';
-import { ModalEventService } from 'src/app/services/modal-event/modal-event.service';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { EmployeeModalEventService } from 'src/app/services/employee-modal-event/employee-modal-event.service';
 import { Employee } from 'src/types/employee';
-import { ModalEvent, ModalTypes } from 'src/types/modalTypes';
+import { EmployeeModalEvent, ModalTypes } from 'src/types/modalTypes';
 
 @Component({
   selector: 'app-modals-container',
@@ -10,14 +9,11 @@ import { ModalEvent, ModalTypes } from 'src/types/modalTypes';
   styleUrls: ['./modals.css'],
 })
 export class ModalsContainerComponent implements OnInit {
-  @Output() onAddEmployee = new EventEmitter<NgForm>();
-  @Output() onEditEmployee = new EventEmitter<NgForm>();
-  @Output() onDeleteEmployee = new EventEmitter<Employee>();
   @ViewChild('container', { static: true }) private selfRef!: ElementRef<HTMLElement>;
 
   public currentEmployee: Employee | undefined;
 
-  constructor(private modalEventHandler: ModalEventService) {}
+  constructor(private modalEventHandler: EmployeeModalEventService) {}
 
   ngOnInit(): void {
     if (!this.selfRef || !this.selfRef.nativeElement) {
@@ -25,7 +21,7 @@ export class ModalsContainerComponent implements OnInit {
     }
   }
 
-  public onOpenModal(event: ModalEvent) {
+  public onOpenModal(event: EmployeeModalEvent) {
     this.currentEmployee = event.data;
     const modalType = event.modal;
     const modalContainer = this.selfRef.nativeElement;

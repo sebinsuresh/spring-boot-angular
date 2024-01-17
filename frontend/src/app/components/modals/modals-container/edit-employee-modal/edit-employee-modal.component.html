@@ -1,5 +1,5 @@
 <h2>Edit Employee</h2>
-<form #form="ngForm" (ngSubmit)="onSubmit.emit(form)">
+<form #form="ngForm" (ngSubmit)="submit(form)">
   <input type="hidden" name="id" id="edit_id" ngModel="{{ employee?.id }}" />
   <input type="hidden" name="employeeCode" id="edit_employeeCode" ngModel="{{ employee?.employeeCode }}" />
   <div class="modal-input">
