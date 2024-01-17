@@ -18,9 +18,5 @@ export class EditEmployeeModalComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit(): void {
-    if (!this.closeModal || !this.onSubmit) {
-      throw new Error('required input functions not provided');
-    }
-  }
+  ngOnInit(): void {}
 }

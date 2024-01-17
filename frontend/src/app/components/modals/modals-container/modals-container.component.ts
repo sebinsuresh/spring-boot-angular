@@ -27,18 +27,18 @@ export class ModalsContainerComponent implements OnInit {
 
   public onOpenModal(event: ModalEvent) {
     this.currentEmployee = event.data;
-
+    const modalType = event.modal;
     const modalContainer = this.selfRef.nativeElement;
-    this.showElement(modalContainer);
 
-    const modal = document.getElementById(`${event.modal}Employee`);
+    const modal = document.getElementById(`${modalType}Employee`);
     if (!modal) {
-      console.error(`modal for ${event.modal} not found`);
+      console.error(`modal for ${modalType} not found`);
       return;
     }
+    this.showElement(modalContainer);
     this.showElement(modal);
 
-    this.modalEventHandler.emit({ event: 'open', modal: event.modal });
+    this.modalEventHandler.emit({ event: 'open', modal: modalType });
   }
 
   public closeAllModals(event?: Event): void {

@@ -21,10 +21,6 @@ export class DeleteEmployeeModalComponent implements OnInit {
   constructor(private modalEventService: ModalEventService) {}
 
   ngOnInit(): void {
-    if (!this.closeModal || !this.onDeleteEmployee) {
-      throw new Error('required input functions not provided');
-    }
-
     this.modalEventService.getObservable().subscribe((evt) => {
       if (evt.modal === DeleteEmployeeModalComponent.mode) {
         switch (evt.event) {
@@ -32,6 +28,7 @@ export class DeleteEmployeeModalComponent implements OnInit {
             this.confirmCountDownToggle$.next(true);
             break;
           case 'cancel':
+          case 'confirm':
             this.confirmCountDownToggle$.next(false);
             break;
           default:
