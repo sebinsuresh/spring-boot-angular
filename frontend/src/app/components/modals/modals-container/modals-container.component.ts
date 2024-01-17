@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { EmployeeModalEventService } from 'src/app/services/employee-modal-event/employee-modal-event.service';
 import { Employee } from 'src/types/employee';
 import { EmployeeModalEvent, ModalTypes } from 'src/types/modalTypes';
@@ -7,6 +7,7 @@ import { EmployeeModalEvent, ModalTypes } from 'src/types/modalTypes';
   selector: 'app-modals-container',
   templateUrl: './modals-container.component.html',
   styleUrls: ['./modals.css'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class ModalsContainerComponent implements OnInit {
   @ViewChild('container', { static: true }) private selfRef!: ElementRef<HTMLElement>;

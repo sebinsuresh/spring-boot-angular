@@ -20,7 +20,7 @@
 }
 
 /* ::ng-deep required to capture nested h2 element when view encapsulation is enabled */
-.modals-container .modal ::ng-deep h2 {
+.modals-container .modal h2 {
   margin: 0;
   margin-bottom: 10px;
 }
