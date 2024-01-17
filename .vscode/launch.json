@@ -8,22 +8,22 @@
             "type": "java",
             "name": "Start Java Backend",
             "request": "launch",
-            "preLaunchTask": "check-docker",
             "mainClass": "dev.sebinsuresh.employeemanager.EmployeemanagerApplication",
-            "projectName": "employeemanager"
+            "projectName": "employeemanager",
+            "preLaunchTask": "spring-boot-start",
         },
         {
             "command": "ng serve",
             "cwd": "${workspaceFolder}/frontend",
             "name": "Start Angular Frontend",
             "request": "launch",
-            "type": "node-terminal"
+            "type": "node-terminal",
         },
         {
             "type": "java",
             "request": "attach",
             "name": "Attach by Process ID",
-            "processId": "${command:PickJavaProcess}"
+            "processId": "${command:PickJavaProcess}",
         },
     ]
 }

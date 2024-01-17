@@ -5,7 +5,22 @@
             "label": "check-docker",
             "type": "shell",
             "command": "./.vscode/check-docker.sh",
-            "problemMatcher": []
+            "problemMatcher": [],
+        },
+        {
+            "label": "build-maven",
+            "type": "shell",
+            "command": "cd backend && ./mvnw install -DskipTests",
+            "problemMatcher": [],
+        },
+        {
+            "label": "spring-boot-start",
+            "type": "shell",
+            "dependsOrder": "parallel",
+            "dependsOn": [
+                "check-docker",
+                "build-maven",
+            ],
         },
     ]
 }
