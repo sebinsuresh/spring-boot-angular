@@ -29,14 +29,14 @@ export class ModalsContainerComponent implements OnInit {
     this.currentEmployee = event.data;
 
     const modalContainer = this.selfRef.nativeElement;
-    modalContainer.style.display = 'block';
+    this.showElement(modalContainer);
 
     const modal = document.getElementById(`${event.modal}Employee`);
     if (!modal) {
       console.error(`modal for ${event.modal} not found`);
       return;
     }
-    modal.style.display = 'block';
+    this.showElement(modal);
 
     this.modalEventHandler.emit({ event: 'open', modal: event.modal });
   }
@@ -53,13 +53,21 @@ export class ModalsContainerComponent implements OnInit {
     const modals = modalContainer.querySelectorAll(`.modals-container .modal`);
     modals.forEach((modal) => {
       if (!(modal instanceof HTMLElement)) return;
-      modal.style.display = 'none';
+      this.hideElement(modal);
 
       // TODO: Better approach?
       const modalType = modal.id.replace('Employee', '');
       this.modalEventHandler.emit({ event: 'cancel', modal: modalType as ModalTypes });
     });
 
-    modalContainer.style.display = 'none';
+    this.hideElement(modalContainer);
+  }
+
+  private showElement(element: HTMLElement, displayType = 'block') {
+    element.style.display = displayType;
+  }
+
+  private hideElement(element: HTMLElement) {
+    element.style.display = 'none';
   }
 }
