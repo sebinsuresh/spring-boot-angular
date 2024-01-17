@@ -27,7 +27,7 @@ export class AppComponent implements OnInit {
     this.getEmployees();
   }
 
-  public getEmployees(): void {
+  private getEmployees(): void {
     this.employeeService.getEmployees().subscribe({
       next: (response) => {
         this.allEmployees = response;
