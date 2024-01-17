@@ -1,26 +1,26 @@
 <h2>Add Employee</h2>
 <form #form="ngForm" (ngSubmit)="submit(form)">
   <div class="modal-input">
-    <label for="add_name">name</label>
+    <label for="add_name">Name</label>
     <input type="text" name="name" id="add_name" ngModel required />
   </div>
   <div class="modal-input">
-    <label for="add_email">email</label>
+    <label for="add_email">Email</label>
     <input type="text" name="email" id="add_email" ngModel required />
   </div>
   <div class="modal-input">
-    <label for="add_jobTitle">jobTitle</label>
+    <label for="add_jobTitle">Job Title</label>
     <input type="text" name="jobTitle" id="add_jobTitle" ngModel required />
   </div>
   <div class="modal-input">
-    <label for="add_phone">phone</label>
+    <label for="add_phone">Phone</label>
     <input type="text" name="phone" id="add_phone" ngModel required />
   </div>
   <div class="modal-input">
-    <label for="add_imageUrl">imageUrl</label>
+    <label for="add_imageUrl">Image Url</label>
     <input type="text" name="imageUrl" id="add_imageUrl" ngModel required />
   </div>
-  <div>
+  <div class="modal-button-container">
     <button type="submit" [disabled]="form.invalid">Save</button>
     <input type="button" value="Cancel" (click)="closeModal.emit()" />
   </div>

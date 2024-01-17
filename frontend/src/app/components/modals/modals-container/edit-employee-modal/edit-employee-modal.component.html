@@ -3,26 +3,26 @@
   <input type="hidden" name="id" id="edit_id" ngModel="{{ employee?.id }}" />
   <input type="hidden" name="employeeCode" id="edit_employeeCode" ngModel="{{ employee?.employeeCode }}" />
   <div class="modal-input">
-    <label for="edit_name">name</label>
+    <label for="edit_name">Name</label>
     <input type="text" name="name" id="edit_name" ngModel="{{ employee?.name }}" />
   </div>
   <div class="modal-input">
-    <label for="edit_email">email</label>
+    <label for="edit_email">Email</label>
     <input type="text" name="email" id="edit_email" ngModel="{{ employee?.email }}" />
   </div>
   <div class="modal-input">
-    <label for="edit_jobTitle">jobTitle</label>
+    <label for="edit_jobTitle">Job Title</label>
     <input type="text" name="jobTitle" id="edit_jobTitle" ngModel="{{ employee?.jobTitle }}" />
   </div>
   <div class="modal-input">
-    <label for="edit_phone">phone</label>
+    <label for="edit_phone">Phone</label>
     <input type="text" name="phone" id="edit_phone" ngModel="{{ employee?.phone }}" />
   </div>
   <div class="modal-input">
-    <label for="edit_imageUrl">imageUrl</label>
+    <label for="edit_imageUrl">Image Url</label>
     <input type="text" name="imageUrl" id="edit_imageUrl" ngModel="{{ employee?.imageUrl }}" />
   </div>
-  <div>
+  <div class="modal-button-container">
     <button type="submit" [disabled]="form.invalid">Save</button>
     <input type="button" value="Cancel" (click)="closeModal.emit()" />
   </div>
