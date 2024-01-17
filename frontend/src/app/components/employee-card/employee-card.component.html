@@ -1,9 +1,11 @@
 <div class="employee-card">
   <img src="{{ employee?.imageUrl }}" alt="Image of Employee" />
-  <div>{{ employee?.name }}</div>
-  <div>{{ employee?.jobTitle }}</div>
-  <div>{{ employee?.email }}</div>
-  <div>{{ employee?.phone }}</div>
+  <div class="field-container">
+    <div class="field name">{{ employee?.name }}</div>
+    <div class="field">{{ employee?.jobTitle }}</div>
+    <div class="field">{{ employee?.email }}</div>
+    <div class="field">{{ employee?.phone }}</div>
+  </div>
 
   <div class="employee-button-container">
     <input type="button" value="✏️" (click)="openModal('edit')" />

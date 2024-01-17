@@ -9,17 +9,38 @@
   background-color: white;
 
   width: 220px;
-  height: 320px;
+}
 
-  overflow: scroll; /* Cards have different top value without this */
-  -ms-overflow-style: none; /* Internet Explorer 10+ */
+.employee-card .field-container {
+  height: 120px;
+  overflow-y: auto;
   scrollbar-width: none;
 }
 
-.employee-card::-webkit-scrollbar {
-  display: none; /* Safari and Chrome */
+.employee-card .field {
+  word-wrap: break-word;
+  margin-bottom: 2px;
+}
+
+.employee-card .field.name {
+  margin-bottom: 4px;
+  font-weight: bold;
 }
 
 .employee-card img {
   width: 150px;
+}
+
+.employee-card .employee-button-container {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.employee-card .employee-button-container input {
+  width: 100%;
+  padding: 8px 0px;
+  border: none;
+  border-radius: 4px;
 }
