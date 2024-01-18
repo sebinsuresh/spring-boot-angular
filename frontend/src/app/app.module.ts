@@ -2,6 +2,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
+import { NgxsModule } from '@ngxs/store';
+import { environment } from 'src/environments/environment';
 import { AppComponent } from './app.component';
 import { EmployeeCardComponent } from './components/employee-card/employee-card.component';
 import { EmployeeSearchComponent } from './components/employee-search/employee-search.component';
@@ -10,6 +12,7 @@ import { DeleteEmployeeModalComponent } from './components/modals/modals-contain
 import { EditEmployeeModalComponent } from './components/modals/modals-container/edit-employee-modal/edit-employee-modal.component';
 import { ModalsContainerComponent } from './components/modals/modals-container/modals-container.component';
 import { TimedButtonComponent } from './components/timed-button/timed-button.component';
+import { EmployeeState } from './states/employee/employee.state';
 
 @NgModule({
   declarations: [
@@ -22,7 +25,12 @@ import { TimedButtonComponent } from './components/timed-button/timed-button.com
     DeleteEmployeeModalComponent,
     TimedButtonComponent,
   ],
-  imports: [BrowserModule, HttpClientModule, FormsModule],
+  imports: [
+    BrowserModule,
+    HttpClientModule,
+    FormsModule,
+    NgxsModule.forRoot([EmployeeState], { developmentMode: !environment.production }),
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })
