@@ -3,7 +3,13 @@ import { Action, Selector, State, StateContext } from '@ngxs/store';
 import { tap } from 'rxjs/operators';
 import { Employee } from 'src/types/employee';
 import { EmployeeCrudService } from '../../services/employee-crud/employee-crud.service';
-import { AddEmployee, DeleteEmployee, EditEmployee, GetAllEmployeesFromAPI } from './employee.action';
+import {
+  AddEmployee,
+  DeleteEmployee,
+  EditEmployee,
+  GetAllEmployeesFromAPI,
+  SetCurrentEmployee,
+} from './employee.action';
 
 export interface EmployeeStateModel {
   allEmployees: Employee[];
@@ -24,12 +30,12 @@ export class EmployeeState {
   //#region selectors
 
   @Selector()
-  static getAllEmployees(state: EmployeeStateModel): Employee[] {
+  static allEmployees(state: EmployeeStateModel): Employee[] {
     return state.allEmployees;
   }
 
   @Selector()
-  static getCurrentEmployee(state: EmployeeStateModel): Employee | undefined {
+  static currentEmployee(state: EmployeeStateModel): Employee | undefined {
     return state.currentEmployee;
   }
 
@@ -38,7 +44,7 @@ export class EmployeeState {
   //#region Actions
 
   @Action(GetAllEmployeesFromAPI)
-  getEmployeesApi(ctx: StateContext<EmployeeStateModel>, action: GetAllEmployeesFromAPI) {
+  getEmployeesApi(ctx: StateContext<EmployeeStateModel>) {
     return this.crudService.getEmployees().pipe(
       tap((result) => {
         ctx.patchState({ allEmployees: result });
@@ -46,19 +52,45 @@ export class EmployeeState {
     );
   }
 
+  @Action(SetCurrentEmployee)
+  setCurrentEmployee(ctx: StateContext<EmployeeStateModel>, action: SetCurrentEmployee) {
+    ctx.patchState({ currentEmployee: action.employee });
+  }
+
   @Action(AddEmployee)
   addEmployee(ctx: StateContext<EmployeeStateModel>, action: AddEmployee) {
-    ctx.patchState({ currentEmployee: action.employee });
+    // TODO: Use ctx.currentEmployee instead?
+    this.crudService.addEmployee(action.employee).pipe(
+      tap((employee) => {
+        ctx.patchState({ allEmployees: [...ctx.getState().allEmployees, employee] });
+      }),
+    );
   }
 
   @Action(EditEmployee)
-  EditEmployee(ctx: StateContext<EmployeeStateModel>, action: AddEmployee) {
-    ctx.patchState({ currentEmployee: action.employee });
+  editEmployee(ctx: StateContext<EmployeeStateModel>, action: AddEmployee) {
+    // TODO: Use ctx.currentEmployee instead?
+    this.crudService.updateEmployee(action.employee).pipe(
+      tap((employee) => {
+        ctx.patchState({
+          allEmployees: ctx
+            .getState()
+            .allEmployees.map((existing) => (existing.id === employee.id ? employee : existing)),
+        });
+      }),
+    );
   }
 
   @Action(DeleteEmployee)
-  DeleteEmployee(ctx: StateContext<EmployeeStateModel>, action: AddEmployee) {
-    ctx.patchState({ currentEmployee: action.employee });
+  deleteEmployee(ctx: StateContext<EmployeeStateModel>, action: AddEmployee) {
+    // TODO: Use ctx.currentEmployee instead?
+    this.crudService.deleteEmployee(action.employee.id).pipe(
+      tap(() => {
+        ctx.patchState({
+          allEmployees: ctx.getState().allEmployees.filter((existing) => existing.id !== action.employee.id),
+        });
+      }),
+    );
   }
 
   //#endregion

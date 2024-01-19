@@ -8,12 +8,14 @@
 </nav>
 <div class="employee-container">
   <app-employee-card
-    *ngFor="let employee of displayedEmployees"
+    *ngFor="let employee of displayedEmployees$ | async"
     [employee]="employee"
     (onModalEvent)="onOpenModal($event)"
   ></app-employee-card>
-  <div *ngIf="!displayedEmployees?.length" class="message">
+  <div *ngIf="(displayedEmployees$ | async)?.length === 0" class="message">
     <p>No employees found!</p>
   </div>
 </div>
 <app-modals-container></app-modals-container>
+<!-- DEBUG -->
+<p>Current employee: {{ (currentEmployee$ | async)?.name ?? 'none selected' }}</p>

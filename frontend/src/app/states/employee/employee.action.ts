@@ -2,7 +2,7 @@ import { Employee } from 'src/types/employee';
 
 export class GetAllEmployeesFromAPI {
   static readonly type = '[EmployeeManager] GetAllEmployeesFromAPI';
-  constructor(public employees: Employee[]) {}
+  constructor() {}
 }
 
 export class SetCurrentEmployee {
