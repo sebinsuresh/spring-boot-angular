@@ -66,6 +66,7 @@ export class AppComponent implements OnInit {
   }
 
   private getEmployees(): void {
+    // TODO: Look at usages and consider removing ones not needed
     this.store.dispatch(new GetAllEmployeesFromAPI());
   }
 
