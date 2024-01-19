@@ -1,26 +1,21 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Subject } from 'rxjs';
-import { EmployeeModalEventService } from 'src/app/services/employee-modal-event/employee-modal-event.service';
-import { Employee } from 'src/types/employee';
+import { Component, OnDestroy } from '@angular/core';
+import { Subject, Subscription } from 'rxjs';
 import { ModalTypes } from 'src/types/modalTypes';
+import { BaseModalComponent } from '../base-modal/base-modal.component';
 
 @Component({
   selector: 'app-delete-employee-modal',
   templateUrl: './delete-employee-modal.component.html',
   styleUrls: ['../modals.css'],
 })
-export class DeleteEmployeeModalComponent implements OnInit {
-  @Input() employee: Employee | undefined;
-  @Output() closeModal = new EventEmitter();
-
-  public static readonly mode: ModalTypes = 'delete';
+export class DeleteEmployeeModalComponent extends BaseModalComponent implements OnDestroy {
   public confirmCountDownToggle$ = new Subject<boolean>();
+  public override mode: ModalTypes = 'delete';
+  public modalEvt$!: Subscription;
 
-  constructor(private modalEventService: EmployeeModalEventService) {}
-
-  ngOnInit(): void {
-    this.modalEventService.getObservable().subscribe((evt) => {
-      if (evt.modal === DeleteEmployeeModalComponent.mode) {
+  override ngOnInit(): void {
+    this.modalEvt$ = this.modalEventService.getObservable().subscribe((evt) => {
+      if (evt.modal === this.mode) {
         switch (evt.event) {
           case 'open':
             this.confirmCountDownToggle$.next(true);
@@ -36,11 +31,7 @@ export class DeleteEmployeeModalComponent implements OnInit {
     });
   }
 
-  submit() {
-    this.modalEventService.emit({
-      data: this.employee,
-      event: 'confirm',
-      modal: DeleteEmployeeModalComponent.mode,
-    });
+  ngOnDestroy(): void {
+    this.modalEvt$.unsubscribe();
   }
 }
