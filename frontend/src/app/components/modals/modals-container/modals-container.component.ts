@@ -1,7 +1,16 @@
-import { Component, ElementRef, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnInit,
+  QueryList,
+  ViewChild,
+  ViewChildren,
+  ViewEncapsulation,
+} from '@angular/core';
 import { EmployeeModalEventService } from 'src/app/services/employee-modal-event/employee-modal-event.service';
 import { Employee } from 'src/types/employee';
-import { EmployeeModalEvent, ModalTypes } from 'src/types/modalTypes';
+import { EmployeeModalEvent } from 'src/types/modalTypes';
+import { BaseModalComponent } from './base-modal/base-modal.component';
 
 @Component({
   selector: 'app-modals-container',
@@ -11,6 +20,7 @@ import { EmployeeModalEvent, ModalTypes } from 'src/types/modalTypes';
 })
 export class ModalsContainerComponent implements OnInit {
   @ViewChild('container', { static: true }) private selfRef!: ElementRef<HTMLElement>;
+  @ViewChildren('modal') private components?: QueryList<BaseModalComponent>;
 
   public currentEmployee: Employee | undefined;
 
@@ -47,14 +57,9 @@ export class ModalsContainerComponent implements OnInit {
       return;
     }
 
-    const modals = modalContainer.querySelectorAll(`.modals-container .modal`);
-    modals.forEach((modal) => {
-      if (!(modal instanceof HTMLElement)) return;
-      this.hideElement(modal);
-
-      // TODO: Better approach?
-      const modalType = modal.id.replace('Employee', '');
-      this.modalEventHandler.emit({ event: 'cancel', modal: modalType as ModalTypes });
+    this.components?.forEach((component) => {
+      this.hideElement(component.element.nativeElement);
+      this.modalEventHandler.emit({ event: 'cancel', modal: component.mode });
     });
 
     this.hideElement(modalContainer);

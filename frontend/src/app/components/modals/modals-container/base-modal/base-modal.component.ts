@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { EmployeeModalEventService } from 'src/app/services/employee-modal-event/employee-modal-event.service';
 import { Employee } from 'src/types/employee';
@@ -14,7 +14,7 @@ export abstract class BaseModalComponent implements OnInit {
   @Output() closeModal = new EventEmitter();
   public abstract readonly mode: ModalTypes;
 
-  constructor(protected modalEventService: EmployeeModalEventService) {}
+  constructor(public element: ElementRef, protected modalEventService: EmployeeModalEventService) {}
 
   abstract ngOnInit(): void;
 
