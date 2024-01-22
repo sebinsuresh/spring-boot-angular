@@ -4,10 +4,14 @@ import { Observable, catchError, map, of } from 'rxjs';
 import { EmployeeModalEvent } from 'src/types/modalTypes';
 import { Employee } from '../types/employee';
 import { ModalsContainerComponent } from './components/modals/modals-container/modals-container.component';
-import { EmployeeCrudService } from './services/employee-crud/employee-crud.service';
 import { EmployeeModalEventService } from './services/employee-modal-event/employee-modal-event.service';
 import { EmployeeSearchService } from './services/employee-search/employee-search.service';
-import { GetAllEmployeesFromAPI } from './states/employee/employee.action';
+import {
+  AddEmployee,
+  DeleteEmployee,
+  EditEmployee,
+  GetAllEmployeesFromAPI,
+} from './states/employee/employee.action';
 import { EmployeeState } from './states/employee/employee.state';
 
 @Component({
@@ -35,14 +39,13 @@ export class AppComponent implements OnInit {
   public allEmployees: Employee[] = [];
 
   constructor(
-    private employeeService: EmployeeCrudService,
     private employeeSearchService: EmployeeSearchService,
     private modalEventService: EmployeeModalEventService,
     private store: Store,
   ) {}
 
   ngOnInit(): void {
-    this.getEmployees();
+    this.store.dispatch(new GetAllEmployeesFromAPI());
 
     this.modalEventService.getObservable().subscribe((event) => {
       if (!event.data || event.event !== 'confirm') {
@@ -65,33 +68,14 @@ export class AppComponent implements OnInit {
     });
   }
 
-  private getEmployees(): void {
-    // TODO: Look at usages and consider removing ones not needed
-    this.store.dispatch(new GetAllEmployeesFromAPI());
-  }
-
   public onAddEmployee(employee: Employee) {
     this.closeModals();
-    this.employeeService.addEmployee(employee).subscribe({
-      next: () => {
-        this.getEmployees();
-      },
-      error: (error) => {
-        console.error(error);
-      },
-    });
+    this.store.dispatch(new AddEmployee(employee));
   }
 
   public onEditEmployee(employee: Employee) {
     this.closeModals();
-    this.employeeService.updateEmployee(employee).subscribe({
-      next: () => {
-        this.getEmployees();
-      },
-      error: (error) => {
-        console.error(error);
-      },
-    });
+    this.store.dispatch(new EditEmployee(employee));
   }
 
   public onDeleteEmployee(employee: Employee | undefined) {
@@ -101,14 +85,7 @@ export class AppComponent implements OnInit {
     }
 
     this.closeModals();
-    this.employeeService.deleteEmployee(employee.id).subscribe({
-      next: () => {
-        this.getEmployees();
-      },
-      error: (error) => {
-        console.error(error);
-      },
-    });
+    this.store.dispatch(new DeleteEmployee(employee));
   }
 
   public onOpenModal(event: EmployeeModalEvent) {
