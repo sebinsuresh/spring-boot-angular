@@ -14,8 +14,7 @@ export class EmployeeSearchComponent {
 
   constructor(private searchService: EmployeeSearchService) {}
 
-  onSearch(event: Event) {
-    const key = (event.target as HTMLInputElement)?.value;
-    this.onSearchResult.emit(this.searchService.findEmployees(this.data, key));
+  onSearch(query: string) {
+    this.onSearchResult.emit(this.searchService.findEmployees(this.data, query));
   }
 }
