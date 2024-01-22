@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Select, Store } from '@ngxs/store';
-import { Observable, catchError, map, of } from 'rxjs';
+import { BehaviorSubject, Observable, catchError, combineLatest, map, of } from 'rxjs';
 import { EmployeeModalEvent } from 'src/types/modalTypes';
 import { Employee } from '../types/employee';
 import { ModalsContainerComponent } from './components/modals/modals-container/modals-container.component';
@@ -23,11 +23,11 @@ export class AppComponent implements OnInit {
 
   @Select(EmployeeState.currentEmployee) public currentEmployee$!: Observable<Employee>;
   @Select(EmployeeState.allEmployees) public allEmployees$!: Observable<Employee[]>;
+  private searchResults = new BehaviorSubject<Employee[] | undefined>(undefined);
 
-  // TODO: Use observables for the search-box filtering
-  public displayedEmployees$ = this.allEmployees$.pipe(
+  public displayedEmployees$ = combineLatest([this.allEmployees$, this.searchResults]).pipe(
     // TODO: Inefficient?
-    map((arr) => [...arr].sort((emp1, emp2) => emp1.id - emp2.id)),
+    map(([all, search]) => [...(search ?? all)].sort((emp1, emp2) => emp1.id - emp2.id)),
     catchError((error) => {
       console.error(error.message);
       return of([]);
@@ -85,6 +85,10 @@ export class AppComponent implements OnInit {
 
   public onOpenModal(event: EmployeeModalEvent) {
     this.modalsContainerRef.onOpenModal(event);
+  }
+
+  onSearchResult(event: Employee[]) {
+    this.searchResults.next(event);
   }
 
   private closeModals() {

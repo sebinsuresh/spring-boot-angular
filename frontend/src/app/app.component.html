@@ -1,10 +1,9 @@
 <nav>
   <span class="logo">Employee Manager</span>
   <a href="#" (click)="onOpenModal({ modal: 'add', event: 'open' })">Add Employee</a>
-  <!-- TODO: Fix - now that ngxs & observables are used -->
   <app-employee-search
-    [data]="allEmployees"
-    (onSearchResult)="displayedEmployees = $event"
+    [data]="(allEmployees$ | async) ?? []"
+    (onSearchResult)="onSearchResult($event)"
   ></app-employee-search>
 </nav>
 <div class="employee-container">
