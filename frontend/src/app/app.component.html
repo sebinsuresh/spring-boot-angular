@@ -1,6 +1,7 @@
 <nav>
   <span class="logo">Employee Manager</span>
   <a href="#" (click)="onOpenModal({ modal: 'add', event: 'open' })">Add Employee</a>
+  <!-- TODO: Fix - now that ngxs & observables are used -->
   <app-employee-search
     [data]="allEmployees"
     (onSearchResult)="displayedEmployees = $event"

@@ -5,7 +5,6 @@ import { EmployeeModalEvent } from 'src/types/modalTypes';
 import { Employee } from '../types/employee';
 import { ModalsContainerComponent } from './components/modals/modals-container/modals-container.component';
 import { EmployeeModalEventService } from './services/employee-modal-event/employee-modal-event.service';
-import { EmployeeSearchService } from './services/employee-search/employee-search.service';
 import {
   AddEmployee,
   DeleteEmployee,
@@ -38,11 +37,7 @@ export class AppComponent implements OnInit {
   public displayedEmployees: Employee[] = [];
   public allEmployees: Employee[] = [];
 
-  constructor(
-    private employeeSearchService: EmployeeSearchService,
-    private modalEventService: EmployeeModalEventService,
-    private store: Store,
-  ) {}
+  constructor(private modalEventService: EmployeeModalEventService, private store: Store) {}
 
   ngOnInit(): void {
     this.store.dispatch(new GetAllEmployeesFromAPI());
@@ -90,12 +85,6 @@ export class AppComponent implements OnInit {
 
   public onOpenModal(event: EmployeeModalEvent) {
     this.modalsContainerRef.onOpenModal(event);
-  }
-
-  // TODO: Fix - now that ngxs & observables are used
-  public onSearchEmployee(event: Event) {
-    const key = (event.target as HTMLInputElement)?.value;
-    this.displayedEmployees = this.employeeSearchService.findEmployees(this.allEmployees, key);
   }
 
   private closeModals() {
