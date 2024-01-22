@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { Employee } from '../../../types/employee';
 import { EmployeeSearchService } from '../../services/employee-search/employee-search.service';
 
@@ -8,13 +8,21 @@ import { EmployeeSearchService } from '../../services/employee-search/employee-s
   templateUrl: './employee-search.component.html',
   styleUrls: ['./employee-search.component.css'],
 })
-export class EmployeeSearchComponent {
+export class EmployeeSearchComponent implements OnChanges {
   @Input() data: Employee[] = [];
   @Output() onSearchResult = new EventEmitter<Employee[]>();
+  private lastQuery: string = '';
 
   constructor(private searchService: EmployeeSearchService) {}
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['data']) {
+      this.onSearch(this.lastQuery);
+    }
+  }
+
   onSearch(query: string) {
+    this.lastQuery = query;
     this.onSearchResult.emit(this.searchService.findEmployees(this.data, query));
   }
 }
