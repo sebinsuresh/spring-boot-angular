@@ -1,5 +1,5 @@
 <h2>Delete Employee?</h2>
-<p>This will delete the record for {{ employee?.name }}</p>
+<p>This will delete the record for {{ (employee$ | async)?.name }}</p>
 <div class="modal-button-container">
   <app-timed-button
     buttonText="Confirm"

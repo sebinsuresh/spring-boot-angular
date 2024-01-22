@@ -59,7 +59,6 @@ export class EmployeeState {
 
   @Action(AddEmployee)
   addEmployee(ctx: StateContext<EmployeeStateModel>, action: AddEmployee) {
-    // TODO: Use ctx.currentEmployee instead?
     return this.crudService.addEmployee(action.employee).pipe(
       tap((employee) => {
         ctx.patchState({ allEmployees: [...ctx.getState().allEmployees, employee] });
@@ -69,7 +68,6 @@ export class EmployeeState {
 
   @Action(EditEmployee)
   editEmployee(ctx: StateContext<EmployeeStateModel>, action: EditEmployee) {
-    // TODO: Use ctx.currentEmployee instead?
     return this.crudService.updateEmployee(action.employee).pipe(
       tap((employee) => {
         ctx.patchState({
@@ -83,7 +81,6 @@ export class EmployeeState {
 
   @Action(DeleteEmployee)
   deleteEmployee(ctx: StateContext<EmployeeStateModel>, action: DeleteEmployee) {
-    // TODO: Use ctx.currentEmployee instead?
     return this.crudService.deleteEmployee(action.employee.id).pipe(
       tap(() => {
         ctx.patchState({

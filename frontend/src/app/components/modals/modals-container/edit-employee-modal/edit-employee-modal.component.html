@@ -1,26 +1,31 @@
 <h2>Edit Employee</h2>
 <form #form="ngForm" (ngSubmit)="submit(form)">
-  <input type="hidden" name="id" id="edit_id" ngModel="{{ employee?.id }}" />
-  <input type="hidden" name="employeeCode" id="edit_employeeCode" ngModel="{{ employee?.employeeCode }}" />
+  <input type="hidden" name="id" id="edit_id" ngModel="{{ (employee$ | async)?.id }}" />
+  <input
+    type="hidden"
+    name="employeeCode"
+    id="edit_employeeCode"
+    ngModel="{{ (employee$ | async)?.employeeCode }}"
+  />
   <div class="modal-input">
     <label for="edit_name">Name</label>
-    <input type="text" name="name" id="edit_name" ngModel="{{ employee?.name }}" />
+    <input type="text" name="name" id="edit_name" ngModel="{{ (employee$ | async)?.name }}" />
   </div>
   <div class="modal-input">
     <label for="edit_email">Email</label>
-    <input type="text" name="email" id="edit_email" ngModel="{{ employee?.email }}" />
+    <input type="text" name="email" id="edit_email" ngModel="{{ (employee$ | async)?.email }}" />
   </div>
   <div class="modal-input">
     <label for="edit_jobTitle">Job Title</label>
-    <input type="text" name="jobTitle" id="edit_jobTitle" ngModel="{{ employee?.jobTitle }}" />
+    <input type="text" name="jobTitle" id="edit_jobTitle" ngModel="{{ (employee$ | async)?.jobTitle }}" />
   </div>
   <div class="modal-input">
     <label for="edit_phone">Phone</label>
-    <input type="text" name="phone" id="edit_phone" ngModel="{{ employee?.phone }}" />
+    <input type="text" name="phone" id="edit_phone" ngModel="{{ (employee$ | async)?.phone }}" />
   </div>
   <div class="modal-input">
     <label for="edit_imageUrl">Image Url</label>
-    <input type="text" name="imageUrl" id="edit_imageUrl" ngModel="{{ employee?.imageUrl }}" />
+    <input type="text" name="imageUrl" id="edit_imageUrl" ngModel="{{ (employee$ | async)?.imageUrl }}" />
   </div>
   <div class="modal-button-container">
     <button type="submit" [disabled]="form.invalid">Save</button>

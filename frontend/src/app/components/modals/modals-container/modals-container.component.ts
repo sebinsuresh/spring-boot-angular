@@ -8,7 +8,6 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { EmployeeModalEventService } from 'src/app/services/employee-modal-event/employee-modal-event.service';
-import { Employee } from 'src/types/employee';
 import { EmployeeModalEvent } from 'src/types/modalTypes';
 import { BaseModalComponent } from './base-modal/base-modal.component';
 
@@ -22,8 +21,6 @@ export class ModalsContainerComponent implements OnInit {
   @ViewChild('container', { static: true }) private selfRef!: ElementRef<HTMLElement>;
   @ViewChildren('modal') private components?: QueryList<BaseModalComponent>;
 
-  public currentEmployee: Employee | undefined;
-
   constructor(private modalEventHandler: EmployeeModalEventService) {}
 
   ngOnInit(): void {
@@ -33,7 +30,6 @@ export class ModalsContainerComponent implements OnInit {
   }
 
   public onOpenModal(event: EmployeeModalEvent) {
-    this.currentEmployee = event.data;
     const modalType = event.modal;
     const modalContainer = this.selfRef.nativeElement;
 
