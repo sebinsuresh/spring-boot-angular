@@ -1,10 +1,18 @@
 using EmployeeManager.Core.Exceptions;
+using EmployeeManager.Repository.DbContexts;
 using EmployeeManager.Repository.Models;
 
 namespace EmployeeManager.Repository.Repositories;
 
 public class EmployeeRepository : IEmployeeRepository
 {
+    private readonly EmployeeDbContext _dbContext;
+
+    public EmployeeRepository(EmployeeDbContext dbContext)
+    {
+        _dbContext = dbContext;
+    }
+
     public async Task<Employee> Add(Employee employee)
     {
         throw new NotImplementedException();

@@ -5,10 +5,11 @@ namespace EmployeeManager.Api;
 
 public static class StartupExtensions
 {
-    public static IServiceCollection AddRequiredServices(this IServiceCollection services)
+    public static IServiceCollection AddRequiredServices(
+        this IServiceCollection services, ConfigurationManager configuration)
     {
         return services
-            .AddRepositoryServices()
-            .AddServices();
+            .AddRepositoryServices(configuration)
+            .AddServices(configuration);
     }
 }
