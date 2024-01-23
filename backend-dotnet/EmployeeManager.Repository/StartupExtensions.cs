@@ -8,6 +8,6 @@ public static class StartupExtensions
     public static IServiceCollection AddRepositoryServices(this IServiceCollection services)
     {
         return services
-            .AddSingleton<IEmployeeRepository, EmployeeRepository>();
+            .AddSingleton<IEmployeeRepository, MockEmployeeRepository>();
     }
 }
