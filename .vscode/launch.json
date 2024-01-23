@@ -5,25 +5,41 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "type": "java",
             "name": "Start Java Backend",
+            "type": "java",
             "request": "launch",
             "mainClass": "dev.sebinsuresh.employeemanager.EmployeemanagerApplication",
             "projectName": "employeemanager",
             "preLaunchTask": "spring-boot-start",
         },
         {
+            "name": "Start Angular Frontend",
             "command": "ng serve",
             "cwd": "${workspaceFolder}/frontend",
-            "name": "Start Angular Frontend",
             "request": "launch",
             "type": "node-terminal",
         },
         {
+            "name": "Java Debugger Attach",
             "type": "java",
             "request": "attach",
-            "name": "Attach by Process ID",
             "processId": "${command:PickJavaProcess}",
+        },
+        {
+            "name": "Start .NET Backend",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build-dotnet",
+            "program": "${workspaceRoot}/backend-dotnet/bin/Debug/net8.0/EmployeeManager.dll",
+            "args": [],
+            "cwd": "${workspaceRoot}/backend-dotnet",
+            "console": "internalConsole",
+        },
+        {
+            "name": ".NET Core Debugger Attach",
+            "type": "coreclr",
+            "request": "attach",
+            "processId": "${command:pickProcess}"
         },
     ]
 }
