@@ -33,35 +33,35 @@ public class EmployeeRepository : IEmployeeRepository
 
 public class MockEmployeeRepository : IEmployeeRepository
 {
-    private static readonly IList<Employee> db = new List<Employee>();
+    private static readonly IList<Employee> _db = new List<Employee>();
 
     public async Task<Employee> Add(Employee employee)
     {
         employee.Id = Random.Shared.NextInt64();
-        db.Add(employee);
+        _db.Add(employee);
         return await Task.FromResult(employee);
     }
 
     public async Task<Employee> FindById(long id)
     {
-        return await Task.FromResult(db.FirstOrDefault(x => x.Id == id)) ?? throw new EmployeeNotFoundException();
+        return await Task.FromResult(_db.FirstOrDefault(x => x.Id == id)) ?? throw new EmployeeNotFoundException();
     }
 
     public async Task<IEnumerable<Employee>> FindAll()
     {
-        return await Task.FromResult(db.Select(x => x));
+        return await Task.FromResult(_db.Select(x => x));
     }
 
     public async Task<Employee> Update(Employee employee)
     {
         var existing = await FindById(employee.Id);
-        db[db.IndexOf(existing)] = employee;
+        _db[_db.IndexOf(existing)] = employee;
         return employee;
     }
 
     public async Task Delete(long id)
     {
         var existing = await FindById(id);
-        db.Remove(existing);
+        _db.Remove(existing);
     }
 }
