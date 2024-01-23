@@ -30,7 +30,7 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build-dotnet",
-            "program": "${workspaceRoot}/backend-dotnet/bin/Debug/net8.0/EmployeeManager.dll",
+            "program": "${workspaceRoot}/backend-dotnet/EmployeeManager.Api/bin/Debug/net8.0/EmployeeManager.Api.dll",
             "args": [],
             "cwd": "${workspaceRoot}/backend-dotnet",
             "console": "internalConsole",
