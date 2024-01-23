@@ -47,15 +47,16 @@ export class AppComponent implements OnInit {
         return;
       }
 
+      this.modalsContainerRef.closeAllModals();
       switch (event.modal) {
         case 'add':
-          this.onAddEmployee(event.data);
+          this.store.dispatch(new AddEmployee(event.data));
           break;
         case 'edit':
-          this.onEditEmployee(event.data);
+          this.store.dispatch(new EditEmployee(event.data));
           break;
         case 'delete':
-          this.onDeleteEmployee(event.data);
+          this.store.dispatch(new DeleteEmployee(event.data));
           break;
         default:
           break;
@@ -63,35 +64,11 @@ export class AppComponent implements OnInit {
     });
   }
 
-  public onAddEmployee(employee: Employee) {
-    this.closeModals();
-    this.store.dispatch(new AddEmployee(employee));
-  }
-
-  public onEditEmployee(employee: Employee) {
-    this.closeModals();
-    this.store.dispatch(new EditEmployee(employee));
-  }
-
-  public onDeleteEmployee(employee: Employee | undefined) {
-    if (!employee) {
-      console.error('No employee selected for delete');
-      return;
-    }
-
-    this.closeModals();
-    this.store.dispatch(new DeleteEmployee(employee));
-  }
-
   public onOpenModal(event: EmployeeModalEvent) {
     this.modalsContainerRef.onOpenModal(event);
   }
 
-  onSearchResult(event: Employee[]) {
+  public onSearchResult(event: Employee[]) {
     this.searchResults.next(event);
-  }
-
-  private closeModals() {
-    this.modalsContainerRef.closeAllModals();
   }
 }
