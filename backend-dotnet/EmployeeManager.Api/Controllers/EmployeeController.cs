@@ -1,5 +1,6 @@
 using EmployeeManager.Api.Mappers;
 using EmployeeManager.Api.Models;
+using EmployeeManager.Core.Exceptions;
 using EmployeeManager.Service.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,12 +11,10 @@ namespace EmployeeManager.Api.Controllers;
 public class EmployeeController : ControllerBase
 {
     private readonly IEmployeeService _employeeService;
-    private readonly ILogger<EmployeeController> _logger;
 
     public EmployeeController(
-        IEmployeeService employeeService, ILogger<EmployeeController> logger)
+        IEmployeeService employeeService)
     {
-        _logger = logger;
         _employeeService = employeeService;
     }
 
@@ -29,28 +28,49 @@ public class EmployeeController : ControllerBase
     [HttpGet("/find/{id}")]
     public async Task<ActionResult<Employee>> GetEmployeeById(long id)
     {
-        var response = (await _employeeService.FindEmployeeById(id)).ToApi();
-        return Ok(response);
+        try
+        {
+            var response = (await _employeeService.FindEmployeeById(id)).ToApi();
+            return Ok(response);
+        }
+        catch (EmployeeNotFoundException)
+        {
+            return NotFound();
+        }
     }
 
-    [HttpGet("/add")]
+    [HttpPost("/add")]
     public async Task<ActionResult<Employee>> AddEmployee(Employee employee)
     {
         var response = (await _employeeService.AddEmployee(employee.ToDomain())).ToApi();
         return Created($"/find/{response.Id}", response);
     }
 
-    [HttpGet("/update")]
+    [HttpPut("/update")]
     public async Task<ActionResult<Employee>> UpdateEmployee(Employee employee)
     {
-        var response = (await _employeeService.UpdateEmployee(employee.ToDomain())).ToApi();
-        return Ok(response);
+        try
+        {
+            var response = (await _employeeService.UpdateEmployee(employee.ToDomain())).ToApi();
+            return Ok(response);
+        }
+        catch (EmployeeNotFoundException)
+        {
+            return NotFound();
+        }
     }
 
-    [HttpGet("/delete/{id}")]
+    [HttpDelete("/delete/{id}")]
     public async Task<ActionResult> DeleteEmployee(long id)
     {
-        await _employeeService.DeleteEmployee(id);
-        return Ok();
+        try
+        {
+            await _employeeService.DeleteEmployee(id);
+            return Ok();
+        }
+        catch (EmployeeNotFoundException)
+        {
+            return NotFound();
+        }
     }
 }

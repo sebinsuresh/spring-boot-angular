@@ -7,8 +7,7 @@ public class EmployeeRepository : IEmployeeRepository
 {
     public async Task<Employee> Add(Employee employee)
     {
-        employee.Id = Random.Shared.NextInt64();
-        return employee;
+        throw new NotImplementedException();
     }
 
     public async Task<Employee> FindById(long id)
@@ -50,7 +49,7 @@ public class MockEmployeeRepository : IEmployeeRepository
 
     public async Task<IEnumerable<Employee>> FindAll()
     {
-        return await Task.FromResult(db.Select(x => x).ToList());
+        return await Task.FromResult(db.Select(x => x));
     }
 
     public async Task<Employee> Update(Employee employee)

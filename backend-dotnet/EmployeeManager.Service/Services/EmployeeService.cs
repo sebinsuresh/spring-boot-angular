@@ -1,5 +1,6 @@
 using EmployeeManager.Domain.Models;
 using EmployeeManager.Repository.Repositories;
+using EmployeeManager.Service.Mappers;
 
 namespace EmployeeManager.Service.Services;
 
@@ -12,28 +13,28 @@ public class EmployeeService : IEmployeeService
         _repo = repo;
     }
 
-    public Task<Employee> AddEmployee(Employee employee)
+    public async Task<Employee> AddEmployee(Employee employee)
     {
-        throw new NotImplementedException();
+        return (await _repo.Add(employee.ToDb())).ToDomain();
     }
 
-    public Task<Employee> FindEmployeeById(long id)
+    public async Task<Employee> FindEmployeeById(long id)
     {
-        throw new NotImplementedException();
+        return (await _repo.FindById(id)).ToDomain();
     }
 
-    public Task<IEnumerable<Employee>> FindAllEmployees()
+    public async Task<IEnumerable<Employee>> FindAllEmployees()
     {
-        throw new NotImplementedException();
+        return (await _repo.FindAll()).Select(x => x.ToDomain());
     }
 
-    public Task<Employee> UpdateEmployee(Employee employee)
+    public async Task<Employee> UpdateEmployee(Employee employee)
     {
-        throw new NotImplementedException();
+        return (await _repo.Update(employee.ToDb())).ToDomain();
     }
 
-    public Task DeleteEmployee(long id)
+    public async Task DeleteEmployee(long id)
     {
-        throw new NotImplementedException();
+        await _repo.Delete(id);
     }
 }
