@@ -7,7 +7,7 @@ namespace EmployeeManager.Api.Mappers;
 public static class EmployeeMappers
 {
     public static ApiEmployeeResponse ToApi(this DomainEmployee employee) =>
-        new ApiEmployeeResponse
+        new()
         {
             Id = employee.Id,
             Name = employee.Name,
@@ -19,7 +19,7 @@ public static class EmployeeMappers
         };
 
     public static DomainEmployee ToDomain(this ApiEmployeeRequest employee) =>
-        new DomainEmployee
+        new()
         {
             Id = employee.Id ?? default,
             Name = employee.Name,
@@ -27,6 +27,5 @@ public static class EmployeeMappers
             JobTitle = employee.JobTitle,
             Phone = employee.Phone,
             ImageUrl = employee.ImageUrl,
-            EmployeeCode = employee.EmployeeCode,
         };
 }

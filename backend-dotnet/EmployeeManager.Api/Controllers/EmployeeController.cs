@@ -8,15 +8,9 @@ namespace EmployeeManager.Api.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class EmployeeController : ControllerBase
+public class EmployeeController(IEmployeeService employeeService) : ControllerBase
 {
-    private readonly IEmployeeService _employeeService;
-
-    public EmployeeController(
-        IEmployeeService employeeService)
-    {
-        _employeeService = employeeService;
-    }
+    private readonly IEmployeeService _employeeService = employeeService;
 
     [HttpGet("all")]
     public async Task<ActionResult<IEnumerable<EmployeeRequest>>> GetAll()

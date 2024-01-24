@@ -4,14 +4,9 @@ using EmployeeManager.Service.Mappers;
 
 namespace EmployeeManager.Service.Services;
 
-public class EmployeeService : IEmployeeService
+public class EmployeeService(IEmployeeRepository repo) : IEmployeeService
 {
-    private readonly IEmployeeRepository _repo;
-
-    public EmployeeService(IEmployeeRepository repo)
-    {
-        _repo = repo;
-    }
+    private readonly IEmployeeRepository _repo = repo;
 
     public async Task<Employee> AddEmployee(Employee employee)
     {

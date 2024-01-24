@@ -14,7 +14,7 @@ public static class EmployeeMappers
             JobTitle = employee.JobTitle,
             Phone = employee.Phone,
             ImageUrl = employee.ImageUrl,
-            EmployeeCode = employee.EmployeeCode
+            EmployeeCode = employee.EmployeeCode,
         };
 
     public static DomainEmployee ToDomain(this DbEmployee employee) =>
@@ -26,7 +26,7 @@ public static class EmployeeMappers
             JobTitle = employee.JobTitle,
             Phone = employee.Phone,
             ImageUrl = employee.ImageUrl,
-            EmployeeCode = employee.EmployeeCode
+            EmployeeCode = employee.EmployeeCode,
         };
 
 }
