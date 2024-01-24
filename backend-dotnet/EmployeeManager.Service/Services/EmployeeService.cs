@@ -15,6 +15,7 @@ public class EmployeeService : IEmployeeService
 
     public async Task<Employee> AddEmployee(Employee employee)
     {
+        employee.EmployeeCode = Guid.NewGuid().ToString();
         return (await _repo.Add(employee.ToDb())).ToDomain();
     }
 
