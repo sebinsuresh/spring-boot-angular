@@ -18,15 +18,15 @@ public class EmployeeController : ControllerBase
         _employeeService = employeeService;
     }
 
-    [HttpGet("/all")]
-    public async Task<ActionResult<IEnumerable<Employee>>> GetAll()
+    [HttpGet("all")]
+    public async Task<ActionResult<IEnumerable<EmployeeRequest>>> GetAll()
     {
         var response = (await _employeeService.FindAllEmployees()).Select(x => x.ToApi());
         return Ok(response);
     }
 
-    [HttpGet("/find/{id}")]
-    public async Task<ActionResult<Employee>> GetEmployeeById(long id)
+    [HttpGet("find/{id}")]
+    public async Task<ActionResult<EmployeeResponse>> GetEmployeeById(long id)
     {
         try
         {
@@ -39,15 +39,15 @@ public class EmployeeController : ControllerBase
         }
     }
 
-    [HttpPost("/add")]
-    public async Task<ActionResult<Employee>> AddEmployee(Employee employee)
+    [HttpPost("add")]
+    public async Task<ActionResult<EmployeeResponse>> AddEmployee(EmployeeRequest employee)
     {
         var response = (await _employeeService.AddEmployee(employee.ToDomain())).ToApi();
-        return Created($"/find/{response.Id}", response);
+        return Created($"find/{response.Id}", response);
     }
 
-    [HttpPut("/update")]
-    public async Task<ActionResult<Employee>> UpdateEmployee(Employee employee)
+    [HttpPut("update")]
+    public async Task<ActionResult<EmployeeResponse>> UpdateEmployee(EmployeeRequest employee)
     {
         try
         {
@@ -60,7 +60,7 @@ public class EmployeeController : ControllerBase
         }
     }
 
-    [HttpDelete("/delete/{id}")]
+    [HttpDelete("delete/{id}")]
     public async Task<ActionResult> DeleteEmployee(long id)
     {
         try

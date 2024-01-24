@@ -1,12 +1,13 @@
-using ApiEmployee = EmployeeManager.Api.Models.Employee;
+using ApiEmployeeRequest = EmployeeManager.Api.Models.EmployeeRequest;
+using ApiEmployeeResponse = EmployeeManager.Api.Models.EmployeeResponse;
 using DomainEmployee = EmployeeManager.Domain.Models.Employee;
 
 namespace EmployeeManager.Api.Mappers;
 
 public static class EmployeeMappers
 {
-    public static ApiEmployee ToApi(this DomainEmployee employee) =>
-        new ApiEmployee
+    public static ApiEmployeeResponse ToApi(this DomainEmployee employee) =>
+        new ApiEmployeeResponse
         {
             Id = employee.Id,
             Name = employee.Name,
@@ -17,10 +18,10 @@ public static class EmployeeMappers
             EmployeeCode = employee.EmployeeCode,
         };
 
-    public static DomainEmployee ToDomain(this ApiEmployee employee) =>
+    public static DomainEmployee ToDomain(this ApiEmployeeRequest employee) =>
         new DomainEmployee
         {
-            Id = employee.Id,
+            Id = employee.Id ?? default,
             Name = employee.Name,
             Email = employee.Email,
             JobTitle = employee.JobTitle,
