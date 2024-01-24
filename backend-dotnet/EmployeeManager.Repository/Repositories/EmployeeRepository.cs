@@ -1,6 +1,7 @@
 using EmployeeManager.Core.Exceptions;
 using EmployeeManager.Repository.DbContexts;
 using EmployeeManager.Repository.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace EmployeeManager.Repository.Repositories;
 
@@ -11,31 +12,43 @@ public class EmployeeRepository : IEmployeeRepository
     public EmployeeRepository(EmployeeDbContext dbContext)
     {
         _dbContext = dbContext;
+        if (_dbContext.Employees == null) throw new Exception("Employees DbSet is null");
     }
 
     public async Task<Employee> Add(Employee employee)
     {
-        throw new NotImplementedException();
+        var entry = await _dbContext.AddAsync(employee);
+        await _dbContext.SaveChangesAsync();
+        return entry.Entity;
     }
 
     public async Task<Employee> FindById(long id)
     {
-        throw new NotImplementedException();
+        return await _dbContext.Employees!
+            .AsNoTracking()
+            .FirstOrDefaultAsync(x => x.Id == id) ?? throw new EmployeeNotFoundException();
     }
 
     public async Task<IEnumerable<Employee>> FindAll()
     {
-        throw new NotImplementedException();
+        return await _dbContext.Employees!.ToListAsync();
     }
 
     public async Task<Employee> Update(Employee employee)
     {
-        throw new NotImplementedException();
+        var existingRecord = await FindById(employee.Id);
+        employee.EmployeeCode = existingRecord.EmployeeCode;
+
+        var entry = _dbContext.Update(employee);
+        await _dbContext.SaveChangesAsync();
+        return entry.Entity;
     }
 
     public async Task Delete(long id)
     {
-        throw new NotImplementedException();
+        var existingRecord = await FindById(id);
+        _dbContext.Remove(existingRecord);
+        await _dbContext.SaveChangesAsync();
     }
 }
 
