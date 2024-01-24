@@ -12,7 +12,7 @@ public static class StartupExtensions
         this IServiceCollection services, ConfigurationManager configuration)
     {
         return services
-            .AddScoped<IEmployeeRepository, MockEmployeeRepository>()
+            .AddScoped<IEmployeeRepository, EmployeeRepository>()
             .AddEntityFrameworkNpgsql()
             .AddDbContext<EmployeeDbContext>(opt => opt
                 .UseNpgsql(configuration.GetValue<string>("ConnectionStrings:DbConnection")));
