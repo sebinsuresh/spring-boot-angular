@@ -22,5 +22,19 @@
                 "build-maven",
             ],
         },
+        {
+            "label": "build-dotnet",
+            "command": [
+                "dotnet",
+                "build",
+            ],
+            "options": {
+                "cwd": "./backend-dotnet",
+            },
+            "type": "shell",
+            "args": [],
+            "group": "build",
+            "problemMatcher": "$msCompile",
+        },
     ]
 }

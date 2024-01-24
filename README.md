@@ -3,7 +3,7 @@
 Employee manager project made using Angular + Spring Boot + PostgreSQL.
 Following this tutorial: https://www.youtube.com/watch?v=Gx4iBLKLVHk
 
-## Backend
+## Java Backend
 
 Using:
 - Maven
@@ -38,6 +38,17 @@ To start up the application with debugger port 5005 open, use:
 mvn spring-boot:run \
     -Dspring-boot.run.jvmArguments="-Xdebug \
           -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5005"
+```
+
+## Dotnet backend
+
+Using:
+- Dotnet 8
+
+Run using:
+```sh
+cd backend-dotnet
+dotnet run --project=EmployeeManager.Api
 ```
 
 ## Frontend
